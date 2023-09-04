@@ -6,7 +6,7 @@
     tools:context=".DetailContactFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+  
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scrollview_cons"
         android:layout_width="match_parent"
@@ -313,6 +313,4 @@
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.core.widget.NestedScrollView>

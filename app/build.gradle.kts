@@ -4,6 +4,8 @@ plugins {
 }
 
 android {
+
+
     namespace = "com.android.contectapp"
     compileSdk = 33
 
@@ -37,6 +39,8 @@ android {
 
 dependencies {
 
+    implementation ("de.hdodenhof:circleimageview:3.1.0") //Circle ImageView
+    implementation("androidx.fragment:fragment-ktx:1.5.7")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")

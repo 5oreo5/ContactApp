@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".recyclerview_item_list">
+
+    <TextView
+        android:id="@+id/recyclerview_collection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:text="A"
+        android:textStyle="bold"
+        android:textColor="#BCB0B0"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/recyclerview_iv_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/recycleview_iv_Ellipse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_collection" />
+
+    <ImageView
+        android:id="@+id/recyclerview_iv_profile2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/recycleview_iv_Ellipse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_iv_profile" />
+
+    <ImageView
+        android:id="@+id/recyclerview_iv_fave_fill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/contact_iv_fave_fill"
+        app:layout_constraintEnd_toStartOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_collection" />
+
+    <TextView
+        android:id="@+id/recyclerview_residence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abdeef University"
+        android:textColor="#C9C0C0"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="@+id/name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintTop_toTopOf="@+id/name"
+        app:layout_constraintVertical_bias="0.838" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="138dp"
+        android:layout_height="50dp"
+        android:text="WooJaeHoon"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/recyclerview_residence2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abdeef University"
+        android:textColor="#C9C0C0"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/name2"
+        app:layout_constraintEnd_toEndOf="@+id/name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/name2"
+        app:layout_constraintTop_toTopOf="@+id/name2"
+        app:layout_constraintVertical_bias="0.838" />
+
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="138dp"
+        android:layout_height="50dp"
+        android:text="WooJaeHoon"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_iv_profile2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_iv_profile2"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
