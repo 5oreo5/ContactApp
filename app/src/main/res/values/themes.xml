@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.ContectApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.ContectApp" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ContectApp" parent="Base.Theme.ContectApp" />
+    <style name="Theme.ContectApp" parent="Base.Theme.ContectApp"/>
+
+    <style name="TabTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:background">#32628C</item>   <!-- 배경 -->
+        <item name="android:textColorPrimary">#2FCCFF</item>       <!-- 탭바 선택된 텍스트 -->
+        <item name="android:textColorSecondary">@android:color/white</item>     <!-- 탭바 텍스트 -->
+        <item name="colorAccent">#2FCCFF</item>                    <!-- 하단 움직이는 바 색-->
+    </style>
 </resources>

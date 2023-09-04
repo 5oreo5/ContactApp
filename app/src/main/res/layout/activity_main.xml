@@ -17,104 +17,55 @@
 
     <Spinner
         android:id="@+id/main_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/main_view"
         app:layout_constraintStart_toEndOf="@+id/main_tv_all"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/tab_layout"
+        app:layout_constraintBottom_toTopOf="@+id/main_tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_view">
+        app:layout_constraintTop_toBottomOf="@+id/main_view"/>
 
-    </androidx.viewpager2.widget.ViewPager2>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
+        android:id="@+id/main_tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/main"
+        android:layout_height="wrap_content"
+        app:tabIndicatorHeight="5dp"
+        app:tabIndicatorColor="#2FCCFF"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="#2FCCFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/main_iv_detail"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="@+id/tab_layout"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager"
-        app:srcCompat="@drawable/tab_iv_detailpage" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/tab_iv_detailpage"
+            android:text="Detail Page" />
 
-    <ImageView
-        android:id="@+id/main_iv_contacts"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="72dp"
-        app:layout_constraintEnd_toStartOf="@+id/main_iv_mypage"
-        app:layout_constraintStart_toEndOf="@+id/main_iv_detail"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager"
-        app:srcCompat="@drawable/tab_iv_contacts" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/tab_iv_contacts"
 
-    <ImageView
-        android:id="@+id/main_iv_mypage"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager"
-        app:srcCompat="@drawable/tab_iv_mypage" />
+            android:text="Contacts" />
 
-    <TextView
-        android:id="@+id/main_tv_detailpage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:text="Detail page"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_iv_detail" />
-
-    <TextView
-        android:id="@+id/main_tv_contacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="72dp"
-        android:text="Contacts"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/main_tv_mypage"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/main_tv_detailpage"
-        app:layout_constraintTop_toBottomOf="@+id/main_iv_contacts" />
-
-    <TextView
-        android:id="@+id/main_tv_mypage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:text="My page"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/tab_layout"
-        app:layout_constraintTop_toBottomOf="@+id/main_iv_mypage" />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/tab_iv_mypage"
+            android:text="My page" />
+    </com.google.android.material.tabs.TabLayout>
 
     <TextView
         android:id="@+id/main_tv_all"
