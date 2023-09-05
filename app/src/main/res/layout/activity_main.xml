@@ -17,7 +17,7 @@
 
     <Spinner
         android:id="@+id/main_spinner"
-        android:layout_marginStart="150dp"
+        android:layout_marginStart="50dp"
         android:layout_width="25dp"
         android:layout_height="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/main_view"
@@ -39,10 +39,13 @@
         android:id="@+id/main_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabRippleColor="@android:color/transparent"
         app:tabIndicatorHeight="5dp"
         app:tabIndicatorColor="#2FCCFF"
+        app:tabIconTint="@color/menu_selected"
         app:tabGravity="fill"
         app:tabSelectedTextColor="#2FCCFF"
+        app:tabTextAppearance="@style/TabTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -57,7 +60,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_iv_contacts"
-
             android:text="Contacts" />
 
         <com.google.android.material.tabs.TabItem
@@ -71,9 +73,10 @@
         android:id="@+id/main_tv_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All"
+        android:text="YULJE CONTACTS"
         android:textColor="@color/white"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/main_view"
         app:layout_constraintEnd_toEndOf="@+id/main_view"
         app:layout_constraintStart_toStartOf="@+id/main_view"

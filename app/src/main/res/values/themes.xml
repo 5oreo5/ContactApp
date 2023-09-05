@@ -7,10 +7,8 @@
 
     <style name="Theme.ContectApp" parent="Base.Theme.ContectApp"/>
 
-    <style name="TabTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="android:background">#32628C</item>   <!-- 배경 -->
-        <item name="android:textColorPrimary">#2FCCFF</item>       <!-- 탭바 선택된 텍스트 -->
-        <item name="android:textColorSecondary">@android:color/white</item>     <!-- 탭바 텍스트 -->
-        <item name="colorAccent">#2FCCFF</item>                    <!-- 하단 움직이는 바 색-->
+    <style name="TabTheme" parent="TextAppearance.Design.Tab">
+
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
