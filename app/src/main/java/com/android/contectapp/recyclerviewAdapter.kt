@@ -9,7 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 import com.android.contectapp.databinding.FragmentContactListBinding
 
-class recyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<recyclerviewAdapter.Holder>() {
+class recyclerviewAdapter(val Item: MutableList<Item>) :
+    RecyclerView.Adapter<recyclerviewAdapter.Holder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(data: Item, position: Int)
+    }
+
+    private var listener: OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
@@ -31,9 +42,8 @@ class recyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<re
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
-        holder.name.text=Item[position].name
-
-        holder.speciallist.text=Item[position].specilalist
+        holder.name.text = Item[position].name
+        holder.specialist.text = Item[position].specialist
 
         Log.d(log, "onBindViewHolder called")
     }
@@ -41,15 +51,15 @@ class recyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<re
     override fun getItemCount(): Int {
         return Item.size
     }
-    override fun getItemId(position: Int):Long{
-    return position.toLong()
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 
-    inner class Holder(val binding: ActivityRecyclerviewItemListBinding) : RecyclerView.ViewHolder(binding.root) {
-    val speciallist=binding.recyclerviewSpeciallist
-        val name=binding.recyclerviewName
-
-
+    inner class Holder(val binding: ActivityRecyclerviewItemListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val specialist = binding.recyclerviewSpeciallist
+        val name = binding.recyclerviewName
     }
 }
 
