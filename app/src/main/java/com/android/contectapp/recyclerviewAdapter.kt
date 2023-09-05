@@ -1,7 +1,5 @@
 package com.android.contectapp
 
-import android.util.Log
-package com.android.contectapp
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
+import com.android.contectapp.databinding.FragmentContactListBinding
 
-class RecyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<RecyclerviewAdapter.Holder>() {
+class recyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<recyclerviewAdapter.Holder>() {
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
     }
+
 
     var itemClick: ItemClick? = null
     var log = "로그"
@@ -27,30 +27,31 @@ class RecyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<Re
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
-        holder.name.text = Item[position].name
-        holder.speciallist.text = Item[position].specilalist
-        holder.image.setImageResource(Item[position].Image)
+        holder.name.text=Item[position].name
+
+        holder.speciallist.text=Item[position].specilalist
+
         Log.d(log, "onBindViewHolder called")
     }
 
     override fun getItemCount(): Int {
         return Item.size
     }
-
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+    override fun getItemId(position: Int):Long{
+    return position.toLong()
     }
 
     inner class Holder(val binding: ActivityRecyclerviewItemListBinding) : RecyclerView.ViewHolder(binding.root) {
-        val speciallist = binding.recyclerviewSpeciallist
-        val name = binding.recyclerviewName
-        val image = binding.recyclerviewIvProfile
+    val speciallist=binding.recyclerviewSpeciallist
+        val name=binding.recyclerviewName
+
+
     }
-
-
 }
+
 
 
