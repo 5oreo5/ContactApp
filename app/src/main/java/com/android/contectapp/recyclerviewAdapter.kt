@@ -48,8 +48,6 @@ class recyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<re
     inner class Holder(val binding: ActivityRecyclerviewItemListBinding) : RecyclerView.ViewHolder(binding.root) {
     val speciallist=binding.recyclerviewSpeciallist
         val name=binding.recyclerviewName
-
-
     }
 }
 
