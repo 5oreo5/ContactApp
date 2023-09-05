@@ -28,17 +28,11 @@ class DetailContactFragment : Fragment() {
     ): View? {
         binding = FragmentDetailContactBinding.inflate(layoutInflater)
 
-        return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             val image = it.getInt("image")
             val name = it.getString("name")
             val nickname = it.getString("nickname")
-            val mobile = it.getString("mobile")
+            val phone = it.getString("phone")
             val specialist = it.getString("specialist")
             val email = it.getString("email")
             val event = it.getString("event")
@@ -46,12 +40,20 @@ class DetailContactFragment : Fragment() {
             binding.detailIvImage.setImageResource(image)
             binding.detailTvName.text = name
             binding.detailTvNickname.text = nickname
-            binding.detailTvPhone.text = mobile
+            binding.detailTvPhone.text = phone
             binding.detailTvSpecialist.text = specialist
             binding.detailTvEmail.text = email
             binding.detailTvEvent.text = event
             binding.detailTvStatus.text = status
         }
+
+        return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         var callBtn = binding.detailBtnCall
 
