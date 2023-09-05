@@ -38,14 +38,15 @@ class recyclerviewAdapter(val Item: MutableList<Item>) :
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        val pos = Item[position]
+        holder.name.text = pos.name
+        holder.specialist.text = pos.specialist
+        holder.image.setImageResource(pos.image)
 
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
-        holder.name.text = Item[position].name
-        holder.specialist.text = Item[position].specialist
 
-        Log.d(log, "onBindViewHolder called")
     }
 
     override fun getItemCount(): Int {
@@ -58,8 +59,9 @@ class recyclerviewAdapter(val Item: MutableList<Item>) :
 
     inner class Holder(val binding: ActivityRecyclerviewItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val specialist = binding.recyclerviewSpeciallist
         val name = binding.recyclerviewName
+        val specialist = binding.recyclerviewSpeciallist
+        val image = binding.recyclerviewIvProfile
     }
 }
 
