@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".addContactDialogFragment">
 
@@ -113,6 +113,7 @@
 
             <EditText
                 android:id="@+id/add_mobileEdit"
+                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -136,15 +137,16 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="30dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/addcontacts_iv_house" />
+                android:src="@drawable/mypage_iv_specialist" />
 
             <EditText
                 android:id="@+id/add_addressEdit"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="80dp"
-                android:hint="Address" />
+                android:hint="Specialist" />
         </LinearLayout>
 
         <LinearLayout
@@ -166,6 +168,7 @@
 
             <EditText
                 android:id="@+id/add_mailEdit"
+                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -173,33 +176,88 @@
                 android:hint="Mail" />
         </LinearLayout>
 
+
+        <!--notification Btn-->
         <LinearLayout
+            android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="40dp"
             android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
+
             <Button
+                android:id="@+id/add_noti_5Btn"
+                android:layout_marginStart="50dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="5분뒤 알림"/>
+
+            <Button
+                android:id="@+id/add_noti_10Btn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="10분뒤 알림"/>
+
+            <Button
+                android:id="@+id/add_noti_30Btn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="30분뒤 알림"/>
+
+        </LinearLayout>
+
+
+        <!--offBtn-->
+        <LinearLayout
+            android:id="@+id/LinearLayout9"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
+
+            <Button
+                android:id="@+id/add_noti_offBtn"
+                android:layout_marginStart="50dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:text="OFF" />
+
+        </LinearLayout>
+
+
+
+        <!--save/cancel btn-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayout9">
+
+            <Button
+                android:id="@+id/add_saveBtn"
                 android:layout_width="120dp"
-                android:layout_height="160dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="60dp"
+                android:backgroundTint="@color/sub1"
                 android:text="SAVE"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:backgroundTint="@color/sub1"/>
+                android:textStyle="bold" />
 
             <Button
+                android:id="@+id/add_cancelBtn"
                 android:layout_width="120dp"
-                android:layout_height="160dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="50dp"
+                android:backgroundTint="@color/text"
                 android:text="CANCEL"
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:backgroundTint="@color/text"/>
-
+                android:textStyle="bold" />
 
         </LinearLayout>
 

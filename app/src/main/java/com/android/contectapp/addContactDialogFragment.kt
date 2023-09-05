@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,15 +26,16 @@ class addContactDialogFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var useTextWatcher: TextWatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //isCancelable = true
 
+
+        //isCancelable = true
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-
         }
     }
 
@@ -42,6 +46,7 @@ class addContactDialogFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_contact_dialog, container, false)
