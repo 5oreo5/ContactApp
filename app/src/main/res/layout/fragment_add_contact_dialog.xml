@@ -13,6 +13,7 @@
 
         <!--왼쪽 우측 아이콘-->
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
 
-        <!--원형뷰 레이아웃-->
+        <!--원형뷰 레이아웃/-->
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                 android:layout_weight="1"
                 android:contentDescription="circleView"
                 android:src="@drawable/tab_iv_mypage_fill"
-                app:civ_border_color="@color/black"
+                app:civ_border_color="@color/text"
                 app:civ_border_width="6dp" />
         </LinearLayout>
 
@@ -70,7 +71,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="150dp"
                 android:layout_marginRight="150dp"
-                android:text="Name"
+                android:hint="Name"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="parent" />
@@ -80,15 +81,19 @@
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-            <TextView
+            <EditText
+                android:id="@+id/add_nickName"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="Address"
+                android:layout_height="50dp"
+                android:layout_marginStart="150dp"
+                android:layout_marginEnd="150dp"
+                android:hint="NickName"
+                android:textSize="13sp"
                 android:textAlignment="center"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -140,7 +145,7 @@
                 android:src="@drawable/mypage_iv_specialist" />
 
             <EditText
-                android:id="@+id/add_addressEdit"
+                android:id="@+id/add_specialEdit"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -181,31 +186,29 @@
         <LinearLayout
             android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="30dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/addcontacts_iv_alarm" />
 
-            <Button
-                android:id="@+id/add_noti_5Btn"
-                android:layout_marginStart="50dp"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="5분뒤 알림"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:textSize="15sp"
+                android:layout_gravity="center_vertical"
+                android:text="Alarm"
+                android:textStyle="bold"/>
 
-            <Button
-                android:id="@+id/add_noti_10Btn"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="10분뒤 알림"/>
-
-            <Button
-                android:id="@+id/add_noti_30Btn"
-                android:layout_width="100dp"
-                android:layout_height="50dp"
-                android:text="30분뒤 알림"/>
 
         </LinearLayout>
 
@@ -215,16 +218,28 @@
             android:id="@+id/LinearLayout9"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:gravity="center_vertical|center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
             <Button
                 android:id="@+id/add_noti_offBtn"
-                android:layout_marginStart="50dp"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:text="OFF" />
+
+            <Button
+                android:id="@+id/add_noti_10Btn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="10분뒤 알림"/>
+
+            <Button
+                android:id="@+id/add_noti_20Btn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="20분뒤 알림"/>
 
         </LinearLayout>
 
@@ -235,6 +250,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/LinearLayout9">
@@ -242,7 +258,7 @@
             <Button
                 android:id="@+id/add_saveBtn"
                 android:layout_width="120dp"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="60dp"
                 android:backgroundTint="@color/sub1"
                 android:text="SAVE"
@@ -252,7 +268,7 @@
             <Button
                 android:id="@+id/add_cancelBtn"
                 android:layout_width="120dp"
-                android:layout_height="70dp"
+                android:layout_height="65dp"
                 android:layout_marginStart="50dp"
                 android:backgroundTint="@color/text"
                 android:text="CANCEL"

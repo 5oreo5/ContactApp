@@ -32,6 +32,17 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerview_collection" />
 
     <ImageView
+        android:id="@+id/recyclerview_iv_profile2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/recycleview_iv_ellipse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_iv_profile" />
+
+    <ImageView
         android:id="@+id/recyclerview_iv_fave_fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,6 +79,34 @@
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
         app:layout_constraintTop_toTopOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/recyclerview_speciallist2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abdeef University"
+        android:textColor="#C9C0C0"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_name2"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerview_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/recyclerview_name2"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_name2"
+        app:layout_constraintVertical_bias="0.838" />
+
+    <TextView
+        android:id="@+id/recyclerview_name2"
+        android:layout_width="138dp"
+        android:layout_height="50dp"
+        android:text="WooJaeHoon"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerview_iv_profile2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_iv_profile2"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
