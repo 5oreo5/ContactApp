@@ -49,8 +49,6 @@ class RecyclerviewAdapter(val Item: MutableList<Item>) : RecyclerView.Adapter<Re
         val name = binding.recyclerviewName
         val image = binding.recyclerviewIvProfile
     }
-
-
 }
 
 
