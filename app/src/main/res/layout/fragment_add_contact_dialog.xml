@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".addContactDialogFragment">
+    tools:context=".AddContactDialogFragment">
 
-        <!--전체 레이아웃-->
+    <!--전체 레이아웃-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/personIcon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:src="@drawable/addcontacts_iv_add"
@@ -44,10 +44,10 @@
             <!-- TODO: Update blank fragment layout -->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/cardImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:layout_weight="1"
                 android:contentDescription="circleView"
                 android:src="@drawable/tab_iv_mypage_fill"
@@ -69,8 +69,8 @@
                 android:id="@+id/add_editName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginRight="150dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
                 android:hint="Name"
                 android:textAlignment="center"
                 android:textStyle="bold"
@@ -90,8 +90,8 @@
                 android:id="@+id/add_nickName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="150dp"
-                android:layout_marginEnd="150dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginEnd="120dp"
                 android:hint="NickName"
                 android:textSize="13sp"
                 android:textAlignment="center"
@@ -103,7 +103,6 @@
             android:id="@+id/linearLayout5"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
@@ -122,7 +121,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="80dp"
+                android:layout_marginEnd="50dp"
                 android:hint="Mobile" />
 
         </LinearLayout>
@@ -131,7 +130,6 @@
             android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
@@ -150,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="80dp"
+                android:layout_marginEnd="50dp"
                 android:hint="Specialist" />
         </LinearLayout>
 
@@ -158,7 +156,6 @@
             android:id="@+id/linearLayout7"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
@@ -177,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="80dp"
+                android:layout_marginEnd="50dp"
                 android:hint="Mail" />
         </LinearLayout>
 
@@ -187,7 +184,6 @@
             android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
@@ -199,29 +195,6 @@
                 android:layout_marginStart="30dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/addcontacts_iv_alarm" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:textSize="15sp"
-                android:layout_gravity="center_vertical"
-                android:text="Alarm"
-                android:textStyle="bold"/>
-
-
-        </LinearLayout>
-
-
-        <!--offBtn-->
-        <LinearLayout
-            android:id="@+id/LinearLayout9"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical|center_horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
             <Button
                 android:id="@+id/add_noti_offBtn"
@@ -241,7 +214,10 @@
                 android:layout_height="50dp"
                 android:text="20분뒤 알림"/>
 
+
         </LinearLayout>
+
+
 
 
 
@@ -249,17 +225,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/LinearLayout9">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
             <Button
                 android:id="@+id/add_saveBtn"
                 android:layout_width="120dp"
                 android:layout_height="65dp"
-                android:layout_marginStart="60dp"
                 android:backgroundTint="@color/sub1"
                 android:text="SAVE"
                 android:textSize="18sp"
@@ -269,7 +244,7 @@
                 android:id="@+id/add_cancelBtn"
                 android:layout_width="120dp"
                 android:layout_height="65dp"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="20dp"
                 android:backgroundTint="@color/text"
                 android:text="CANCEL"
                 android:textSize="18sp"

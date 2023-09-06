@@ -7,15 +7,13 @@ import java.lang.IllegalArgumentException
 
 class MainAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {
-        return 3
+        return 2
     }
     override fun createFragment(position: Int): Fragment {
 
         return when (position) {
-
-            0 -> DetailContactFragment()
-            1 -> ContactListFragment()
-            2 -> MyPageFragment()
+            0 -> ContactListFragment()
+            1 -> MyPageFragment()
             else -> throw IllegalArgumentException("잘못된 위치: $position")
         }
 

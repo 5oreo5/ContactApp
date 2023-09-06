@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
-import com.android.contectapp.databinding.FragmentContactListBinding
 
-class recyclerviewAdapter(val Item: MutableList<Item>) :
-    RecyclerView.Adapter<recyclerviewAdapter.Holder>() {
+class Adapter(val Item: MutableList<Item>) :
+    RecyclerView.Adapter<Adapter.Holder>() {
 
     interface OnItemClickListener {
         fun onItemClick(data: Item, position: Int)
@@ -44,9 +43,11 @@ class recyclerviewAdapter(val Item: MutableList<Item>) :
         holder.image.setImageResource(pos.image)
 
         holder.itemView.setOnClickListener {
-            itemClick?.onClick(it, position)
+            val position = holder.bindingAdapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener?.onItemClick(pos, position)
+            }
         }
-
     }
 
     override fun getItemCount(): Int {

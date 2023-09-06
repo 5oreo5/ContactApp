@@ -12,7 +12,7 @@ data class Item(
 )
 
 object NewListRepository {
-    fun getNewList(): List<Item> {
+    fun getNewList(): MutableList<Item> {
         val dataList = mutableListOf<Item>()
 
         dataList.add(
