@@ -13,7 +13,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
     private lateinit var binding : FragmentContactListBinding
     private lateinit var rv : RecyclerView
-    private lateinit var adapter : recyclerviewAdapter
+    private lateinit var adapter : RecyclerviewAdapter
     private var items = NewListRepository.getNewList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,10 +36,10 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         rv = binding.recyclerview
         rv.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = recyclerviewAdapter(items as MutableList<Item>)
+        adapter = RecyclerviewAdapter(items as MutableList<Item>)
         rv.adapter = adapter
 
-        adapter.setOnItemClickListener(object : recyclerviewAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object : RecyclerviewAdapter.OnItemClickListener {
 
             override fun onItemClick(data: Item, position: Int) {
                 val image = data.image

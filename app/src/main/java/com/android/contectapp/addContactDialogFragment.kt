@@ -1,5 +1,7 @@
 package com.android.contectapp
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -8,13 +10,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.content.Intent
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.android.contectapp.databinding.FragmentAddContactDialogBinding
 import java.util.regex.Pattern
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,10 +31,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class addContactDialogFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var useTextWatcher: TextWatcher
     private lateinit var binding : FragmentAddContactDialogBinding
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +56,31 @@ class addContactDialogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddContactDialogBinding.inflate(inflater,container,false)
+        //알람 context설정
+        alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(requireContext(), RecyclerviewAdapter::class.java)
+        pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent,
+            PendingIntent.FLAG_IMMUTABLE)
+
+        binding.addNotiOffBtn.setOnClickListener {
+            // 알람 끄기
+            alarmManager.cancel(pendingIntent)
+        }
+
+        binding.addNoti10Btn.setOnClickListener {
+            // 10분 뒤 알람 설정
+            val delayMillis = 10 * 60 * 1000L
+            val triggerAtMillis = System.currentTimeMillis() + delayMillis
+            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+        }
+
+        binding.addNoti20Btn.setOnClickListener {
+            // 20분 뒤 알람 설정
+            val delayMillis = 20 * 60 * 1000L
+            val triggerAtMillis = System.currentTimeMillis() + delayMillis
+            alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+        }
+
 
         var saveBtn = binding.addSaveBtn
         var cancelBtn = binding.addCancelBtn
