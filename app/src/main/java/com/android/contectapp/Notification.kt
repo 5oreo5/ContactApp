@@ -11,16 +11,14 @@ import androidx.core.app.NotificationCompat
 
 class NotificationHelper(base: Context?):ContextWrapper(base) {
 
-
     private val channelID="channelID"
     private val channelNM="channelNM"
-
     init{
         //안드버전이 오레오 이상이면 실행
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
             createChannel()
     }
-    //채널생성
+    // 채널 생성
     private fun createChannel(){
         var channel=NotificationChannel(channelID,channelNM,NotificationManager.IMPORTANCE_DEFAULT)
         channel.enableLights(true)
@@ -36,10 +34,21 @@ class NotificationHelper(base: Context?):ContextWrapper(base) {
         return getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
     //notification 설정
-    fun getchannelNotofication():NotificationCompat.Builder{
-        return NotificationCompat.Builder(applicationContext,channelID)
-            .setContentTitle("알람이 설정되었습니다.")
-            .setContentText("설정한 시간 후 알람이 울립니다.")
+    fun createNotification(title: String, content: String): NotificationCompat.Builder {
+        return NotificationCompat.Builder(applicationContext, channelID)
+            .setContentTitle(title)
+            .setContentText(content)
             .setSmallIcon(R.drawable.ic_launcher_background)
     }
+
+    fun showNotification(notificationId: Int, notificationBuilder: NotificationCompat.Builder) {
+        val notificationManager = getManager()
+        notificationManager.notify(notificationId, notificationBuilder.build())
+    }
+
+    fun cancelNotification(notificationId: Int) {
+        val notificationManager = getManager()
+        notificationManager.cancel(notificationId)
+    }
+
 }

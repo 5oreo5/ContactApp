@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater)}
-    private val tabTextList = listOf("detail_page","contacts", "my_page")
-    private val tabIconList = listOf(R.drawable.tab_iv_detailpage,R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
+    private val tabTextList = listOf("contacts", "my_page")
+    private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.mainViewPager.adapter = MainAdapter(this)
+
 
         // READ_CONTACTS 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(
