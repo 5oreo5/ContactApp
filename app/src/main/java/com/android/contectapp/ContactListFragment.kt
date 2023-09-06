@@ -20,6 +20,8 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+
+
     }
 
     override fun onCreateView(
@@ -27,11 +29,14 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
+
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         rv = binding.recyclerview
         rv.layoutManager = LinearLayoutManager(requireContext())
@@ -64,6 +69,15 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 detailContactFragment.arguments = bundle
             }
         })
+
+        val addButton = binding.btnContactAddList
+        addButton.setOnClickListener {
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            val dialogFragment = AddContactDialogFragment()
+
+            dialogFragment.show(fragmentTransaction, "AddContactDialogFragment")
+
+        }
     }
 
 }

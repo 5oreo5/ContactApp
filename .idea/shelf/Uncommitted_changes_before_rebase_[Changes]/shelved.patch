@@ -1,0 +1,515 @@
+Index: app/src/main/java/com/android/contectapp/ContactListFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.android.contectapp\n\nimport android.os.Bundle\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView\nimport com.android.contectapp.databinding.FragmentContactListBinding\n\nclass ContactListFragment : Fragment(R.layout.fragment_contact_list) {\n\n    private lateinit var binding : FragmentContactListBinding\n    private lateinit var rv : RecyclerView\n    private lateinit var adapter : recyclerviewAdapter\n    private var items = NewListRepository.getNewList()\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        arguments?.let {\n        }\n    }\n\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        binding = FragmentContactListBinding.inflate(layoutInflater)\n        return binding.root\n    }\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n        super.onViewCreated(view, savedInstanceState)\n\n        rv = binding.recyclerview\n        rv.layoutManager = LinearLayoutManager(requireContext())\n\n        adapter = recyclerviewAdapter(items as MutableList<Item>)\n        rv.adapter = adapter\n\n        adapter.setOnItemClickListener(object : recyclerviewAdapter.OnItemClickListener {\n\n            override fun onItemClick(data: Item, position: Int) {\n                val image = data.image\n                val name = data.name\n                val nickname = data.nickname\n                val phone = data.phone\n                val specialist = data.specialist\n                val email = data.email\n                val event = data.event\n                val status = data.status\n\n                val detailContactFragment = DetailContactFragment()\n                val bundle = Bundle()\n                bundle.putInt(\"image\", image)\n                bundle.putString(\"name\", name)\n                bundle.putString(\"nickname\", nickname)\n                bundle.putString(\"phone\", phone)\n                bundle.putString(\"specialist\", specialist)\n                bundle.putString(\"email\", email)\n                bundle.putString(\"event\", event)\n                bundle.putString(\"status\", status)\n                detailContactFragment.arguments = bundle\n            }\n        })\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/android/contectapp/ContactListFragment.kt b/app/src/main/java/com/android/contectapp/ContactListFragment.kt
+--- a/app/src/main/java/com/android/contectapp/ContactListFragment.kt	(revision 51bc0318f81bafde3dafa9946d0c5f379066907f)
++++ b/app/src/main/java/com/android/contectapp/ContactListFragment.kt	(date 1693963624359)
+@@ -5,6 +5,7 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.fragment.app.FragmentManager
+ import androidx.recyclerview.widget.LinearLayoutManager
+ import androidx.recyclerview.widget.RecyclerView
+ import com.android.contectapp.databinding.FragmentContactListBinding
+@@ -20,6 +21,8 @@
+         super.onCreate(savedInstanceState)
+         arguments?.let {
+         }
++
++
+     }
+ 
+     override fun onCreateView(
+@@ -27,12 +30,15 @@
+         savedInstanceState: Bundle?
+     ): View? {
+         binding = FragmentContactListBinding.inflate(layoutInflater)
++
+         return binding.root
+     }
+ 
++
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+ 
++
+         rv = binding.recyclerview
+         rv.layoutManager = LinearLayoutManager(requireContext())
+ 
+@@ -64,6 +70,15 @@
+                 detailContactFragment.arguments = bundle
+             }
+         })
++
++        val addButton = binding.btnContactAddList
++        addButton.setOnClickListener {
++            val fragmentTransaction = parentFragmentManager.beginTransaction()
++            val dialogFragment = AddContactDialogFragment()
++
++            dialogFragment.show(fragmentTransaction, "AddContactDialogFragment")
++
++        }
+     }
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/android/contectapp/addContactDialogFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.android.contectapp\n\nimport android.content.Context\nimport android.os.Bundle\nimport android.text.Editable\nimport android.text.TextWatcher\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.Button\nimport android.content.Intent\nimport android.widget.EditText\nimport android.widget.Toast\nimport androidx.appcompat.app.AppCompatActivity\nimport com.android.contectapp.databinding.FragmentAddContactDialogBinding\nimport java.util.regex.Pattern\n\n\n// TODO: Rename parameter arguments, choose names that match\n// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER\nprivate const val ARG_PARAM1 = \"param1\"\nprivate const val ARG_PARAM2 = \"param2\"\n\n\n\n/**\n * A simple [Fragment] subclass.\n * Use the [addContactDialogFragment.newInstance] factory method to\n * create an instance of this fragment.\n */\nclass addContactDialogFragment : Fragment() {\n    // TODO: Rename and change types of parameters\n    private var param1: String? = null\n    private var param2: String? = null\n    private lateinit var useTextWatcher: TextWatcher\n    private lateinit var binding : FragmentAddContactDialogBinding\n\n\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n\n\n        //isCancelable = true\n        arguments?.let {\n            param1 = it.getString(ARG_PARAM1)\n            param2 = it.getString(ARG_PARAM2)\n        }\n    }\n\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        binding = FragmentAddContactDialogBinding.inflate(inflater,container,false)\n\n        var saveBtn = binding.addSaveBtn\n        var cancelBtn = binding.addCancelBtn\n        var editName = binding.addEditName\n        var editMobile= binding.addMobileEdit\n        var editSpecial = binding.addSpecialEdit\n        var editMail = binding.addMailEdit\n        \n        useTextWatcher = object : TextWatcher {\n            val maxLength = 15\n            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {\n            }\n\n            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {\n            }\n\n            override fun afterTextChanged(s: Editable?) {\n                if (s?.length ?: 0 > maxLength) {\n                    editName.error = \"최대 $maxLength 글자까지 입력 가능합니다.\"\n                } else {\n                    editName.error = null // 이전에 설정된 오류 지우기.\n                }\n            }\n        }\n\n        saveBtn.setOnClickListener() {\n            // 이름, 번호, 담당 ,메일주소\n            val name = editName.text.toString()\n            val mobile = editMobile.text.toString()\n            val special = editSpecial.text.toString()\n            val mail = editMail.text.toString()\n\n            if (name.isEmpty()) {\n                Toast.makeText(requireContext(), \"아이디를 입력해주세요!\", Toast.LENGTH_SHORT).show()\n            } else if (mobile.isEmpty()) {\n                Toast.makeText(requireContext(), \"번호를 입력해주세요!\", Toast.LENGTH_SHORT).show()\n            } else if (special.isEmpty()) {\n                Toast.makeText(requireContext(), \"담당을 입력해주세요!\", Toast.LENGTH_SHORT).show()\n            } else if (mail.isEmpty()) {\n                Toast.makeText(requireContext(), \"이메일을 입력해주세요!\", Toast.LENGTH_SHORT).show()\n            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {\n                Toast.makeText(requireContext(), \"이메일 형식이 아닙니다\", Toast.LENGTH_SHORT).show()\n            } else if (!Pattern.matches(\"^01(?:0|1|[6-9]) - (?:\\\\d{3}|\\\\d{4}) - \\\\d{4}$\", mobile)) {\n                Toast.makeText(requireContext(), \"올바른 핸드폰 번호가 아닙니다.\", Toast.LENGTH_SHORT).show()\n            } else if (!Pattern.matches(\"^[가-힣]*\\$\", special)) {\n                Toast.makeText(requireContext(), \"한글만 입력해 주세요\", Toast.LENGTH_SHORT).show()\n            } else {\n                Toast.makeText(requireContext(), \"회원가입 완료!\", Toast.LENGTH_SHORT).show()\n\n            }\n\n\n            cancelBtn.setOnClickListener() {\n                requireActivity().supportFragmentManager.popBackStack()\n            }\n\n\n        }\n        return binding.root\n\n/*\n        companion object {\n            /**\n             * Use this factory method to create a new instance of\n             * this fragment using the provided parameters.\n             *\n             * @param param1 Parameter 1.\n             * @param param2 Parameter 2.\n             * @return A new instance of fragment addContactDialogFragment.\n             */\n            // TODO: Rename and change types and number of parameters\n            @JvmStatic\n            fun newInstance(param1: String, param2: String) =\n                addContactDialogFragment().apply {\n                    arguments = Bundle().apply {\n                        putString(ARG_PARAM1, param1)\n                        putString(ARG_PARAM2, param2)\n                    }\n                }\n        }\n\n */\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/android/contectapp/addContactDialogFragment.kt b/app/src/main/java/com/android/contectapp/AddContactDialogFragment.kt
+rename from app/src/main/java/com/android/contectapp/addContactDialogFragment.kt
+rename to app/src/main/java/com/android/contectapp/AddContactDialogFragment.kt
+--- a/app/src/main/java/com/android/contectapp/addContactDialogFragment.kt	(revision 51bc0318f81bafde3dafa9946d0c5f379066907f)
++++ b/app/src/main/java/com/android/contectapp/AddContactDialogFragment.kt	(date 1693987474953)
+@@ -1,6 +1,5 @@
+ package com.android.contectapp
+ 
+-import android.content.Context
+ import android.os.Bundle
+ import android.text.Editable
+ import android.text.TextWatcher
+@@ -9,74 +8,42 @@
+ import android.view.View
+ import android.view.ViewGroup
+ import android.widget.Button
+-import android.content.Intent
+ import android.widget.EditText
+ import android.widget.Toast
+-import androidx.appcompat.app.AppCompatActivity
++import androidx.fragment.app.DialogFragment
+ import com.android.contectapp.databinding.FragmentAddContactDialogBinding
+ import java.util.regex.Pattern
+ 
+ 
+-// TODO: Rename parameter arguments, choose names that match
+-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
+-
+-
+-
+-/**
+- * A simple [Fragment] subclass.
+- * Use the [addContactDialogFragment.newInstance] factory method to
+- * create an instance of this fragment.
+- */
+-class addContactDialogFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
+-    private lateinit var useTextWatcher: TextWatcher
+-    private lateinit var binding : FragmentAddContactDialogBinding
++class AddContactDialogFragment : DialogFragment() {
++    private lateinit var binding: FragmentAddContactDialogBinding
+ 
++    private lateinit var saveBtn : Button
++    private lateinit var cancelBtn : Button
++    private lateinit var editName : EditText
++    private lateinit var editMobile : EditText
++    private lateinit var editSpecial : EditText
++    private lateinit var editMail : EditText
++
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-
+-
+-        //isCancelable = true
+-        arguments?.let {
+-            param1 = it.getString(ARG_PARAM1)
+-            param2 = it.getString(ARG_PARAM2)
+-        }
+     }
+ 
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+     ): View? {
+-        binding = FragmentAddContactDialogBinding.inflate(inflater,container,false)
++        binding = FragmentAddContactDialogBinding.inflate(inflater, container, false)
+ 
+-        var saveBtn = binding.addSaveBtn
+-        var cancelBtn = binding.addCancelBtn
+-        var editName = binding.addEditName
+-        var editMobile= binding.addMobileEdit
+-        var editSpecial = binding.addSpecialEdit
+-        var editMail = binding.addMailEdit
+-        
+-        useTextWatcher = object : TextWatcher {
+-            val maxLength = 15
+-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+-            }
++        saveBtn = binding.addSaveBtn
++        cancelBtn = binding.addCancelBtn
++        editName = binding.addEditName
++        editMobile = binding.addMobileEdit
++        editSpecial = binding.addSpecialEdit
++        editMail = binding.addMailEdit
+ 
+-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+-            }
+-
+-            override fun afterTextChanged(s: Editable?) {
+-                if (s?.length ?: 0 > maxLength) {
+-                    editName.error = "최대 $maxLength 글자까지 입력 가능합니다."
+-                } else {
+-                    editName.error = null // 이전에 설정된 오류 지우기.
+-                }
+-            }
+-        }
++        editMail.addTextChangedListener(useTextWatcher(editMail))
+ 
+         saveBtn.setOnClickListener() {
+             // 이름, 번호, 담당 ,메일주소
+@@ -103,38 +70,25 @@
+                 Toast.makeText(requireContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show()
+ 
+             }
+-
+-
+             cancelBtn.setOnClickListener() {
+                 requireActivity().supportFragmentManager.popBackStack()
+             }
+-
+-
+         }
+         return binding.root
+-
+-/*
+-        companion object {
+-            /**
+-             * Use this factory method to create a new instance of
+-             * this fragment using the provided parameters.
+-             *
+-             * @param param1 Parameter 1.
+-             * @param param2 Parameter 2.
+-             * @return A new instance of fragment addContactDialogFragment.
+-             */
+-            // TODO: Rename and change types and number of parameters
+-            @JvmStatic
+-            fun newInstance(param1: String, param2: String) =
+-                addContactDialogFragment().apply {
+-                    arguments = Bundle().apply {
+-                        putString(ARG_PARAM1, param1)
+-                        putString(ARG_PARAM2, param2)
+-                    }
++    }
++
++    private fun useTextWatcher(editText: EditText): TextWatcher {
++        return object : TextWatcher {
++            val maxLength = 15
++            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
++            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
++                if ((s?.length ?: 0) > maxLength) {
++                    editMail.error = "최대 $maxLength 글자 까지 입력 가능 합니다."
++                } else {
++                    editMail.error = null // 이전에 설정된 오류 지우기.
+                 }
+-        }
+-
+- */
+-    }
+-
+-}
++            }
++            override fun afterTextChanged(s: Editable?) {}
++        }
++    }
++}
+\ No newline at end of file
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"deploymentTargetDropDown\">\n    <targetSelectedWithDropDown>\n      <Target>\n        <type value=\"QUICK_BOOT_TARGET\" />\n        <deviceKey>\n          <Key>\n            <type value=\"VIRTUAL_DEVICE_PATH\" />\n            <value value=\"C:\\AndroidAVD\\Pixel_3_XL_API_31.avd\" />\n          </Key>\n        </deviceKey>\n      </Target>\n    </targetSelectedWithDropDown>\n    <timeTargetWasSelectedWithDropDown value=\"2023-09-05T11:55:31.283200300Z\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+--- a/.idea/deploymentTargetDropDown.xml	(revision 51bc0318f81bafde3dafa9946d0c5f379066907f)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1693960703667)
+@@ -7,11 +7,11 @@
+         <deviceKey>
+           <Key>
+             <type value="VIRTUAL_DEVICE_PATH" />
+-            <value value="C:\AndroidAVD\Pixel_3_XL_API_31.avd" />
++            <value value="$USER_HOME$/.android/avd/Pixel_3_XL_API_31.avd" />
+           </Key>
+         </deviceKey>
+       </Target>
+     </targetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2023-09-05T11:55:31.283200300Z" />
++    <timeTargetWasSelectedWithDropDown value="2023-09-06T00:38:18.535112Z" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_add_contact_dialog.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"wrap_content\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    tools:context=\".addContactDialogFragment\">\n\n        <!--전체 레이아웃-->\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <!--왼쪽 우측 아이콘-->\n        <LinearLayout\n            android:layout_marginTop=\"10dp\"\n            android:id=\"@+id/linearLayout\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\">\n\n            <ImageView\n                android:id=\"@+id/personIcon\"\n                android:layout_width=\"40dp\"\n                android:layout_height=\"40dp\"\n                android:layout_marginStart=\"30dp\"\n                android:layout_marginTop=\"30dp\"\n                android:src=\"@drawable/addcontacts_iv_add\"\n                app:layout_constraintBottom_toBottomOf=\"parent\"\n                app:layout_constraintEnd_toEndOf=\"parent\"\n                app:layout_constraintStart_toStartOf=\"parent\"\n                app:layout_constraintTop_toTopOf=\"parent\" />\n        </LinearLayout>\n\n        <!--원형뷰 레이아웃/-->\n        <LinearLayout\n            android:id=\"@+id/linearLayout2\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\">\n            <!-- TODO: Update blank fragment layout -->\n            <de.hdodenhof.circleimageview.CircleImageView\n                android:id=\"@+id/cardImage\"\n                android:layout_width=\"100dp\"\n                android:layout_height=\"100dp\"\n                android:layout_centerHorizontal=\"true\"\n                android:layout_marginTop=\"100dp\"\n                android:layout_weight=\"1\"\n                android:contentDescription=\"circleView\"\n                android:src=\"@drawable/tab_iv_mypage_fill\"\n                app:civ_border_color=\"@color/text\"\n                app:civ_border_width=\"6dp\" />\n        </LinearLayout>\n\n\n        <!--이름입력-->\n        <LinearLayout\n            android:id=\"@+id/linearLayout3\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"50dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout2\">\n\n            <EditText\n                android:id=\"@+id/add_editName\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"50dp\"\n                android:layout_marginLeft=\"150dp\"\n                android:layout_marginRight=\"150dp\"\n                android:hint=\"Name\"\n                android:textAlignment=\"center\"\n                android:textStyle=\"bold\"\n                app:layout_constraintTop_toBottomOf=\"parent\" />\n        </LinearLayout>\n\n        <!--textAddress-->\n        <LinearLayout\n            android:id=\"@+id/linearLayout4\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"50dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout3\">\n\n            <EditText\n                android:id=\"@+id/add_nickName\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"50dp\"\n                android:layout_marginStart=\"150dp\"\n                android:layout_marginEnd=\"150dp\"\n                android:hint=\"NickName\"\n                android:textSize=\"13sp\"\n                android:textAlignment=\"center\"\n                android:textStyle=\"bold\" />\n        </LinearLayout>\n\n        <!--Icon Mobile/input-->\n        <LinearLayout\n            android:id=\"@+id/linearLayout5\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"50dp\"\n            android:layout_marginTop=\"10dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout4\">\n\n            <ImageView\n                android:layout_width=\"40dp\"\n                android:layout_height=\"40dp\"\n                android:layout_gravity=\"center_vertical\"\n                android:layout_marginStart=\"30dp\"\n                android:scaleType=\"centerInside\"\n                android:src=\"@drawable/mypage_iv_mobile\" />\n\n            <EditText\n                android:id=\"@+id/add_mobileEdit\"\n                android:inputType=\"phone\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginStart=\"20dp\"\n                android:layout_marginEnd=\"80dp\"\n                android:hint=\"Mobile\" />\n\n        </LinearLayout>\n\n        <LinearLayout\n            android:id=\"@+id/linearLayout6\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"50dp\"\n            android:layout_marginTop=\"10dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout5\">\n\n            <ImageView\n                android:layout_width=\"40dp\"\n                android:layout_height=\"40dp\"\n                android:layout_gravity=\"center_vertical\"\n                android:layout_marginStart=\"30dp\"\n                android:scaleType=\"centerInside\"\n                android:src=\"@drawable/mypage_iv_specialist\" />\n\n            <EditText\n                android:id=\"@+id/add_specialEdit\"\n                android:inputType=\"text\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginStart=\"20dp\"\n                android:layout_marginEnd=\"80dp\"\n                android:hint=\"Specialist\" />\n        </LinearLayout>\n\n        <LinearLayout\n            android:id=\"@+id/linearLayout7\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"50dp\"\n            android:layout_marginTop=\"10dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout6\">\n\n            <ImageView\n                android:layout_width=\"40dp\"\n                android:layout_height=\"40dp\"\n                android:layout_gravity=\"center_vertical\"\n                android:layout_marginStart=\"30dp\"\n                android:scaleType=\"centerInside\"\n                android:src=\"@drawable/mypage_iv_email\" />\n\n            <EditText\n                android:id=\"@+id/add_mailEdit\"\n                android:inputType=\"textEmailAddress\"\n                android:layout_width=\"match_parent\"\n                android:layout_height=\"match_parent\"\n                android:layout_marginStart=\"20dp\"\n                android:layout_marginEnd=\"80dp\"\n                android:hint=\"Mail\" />\n        </LinearLayout>\n\n\n        <!--notification Btn-->\n        <LinearLayout\n            android:id=\"@+id/linearLayout8\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"50dp\"\n            android:layout_marginTop=\"10dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout7\">\n\n            <ImageView\n                android:layout_width=\"40dp\"\n                android:layout_height=\"40dp\"\n                android:layout_gravity=\"center_vertical\"\n                android:layout_marginStart=\"30dp\"\n                android:scaleType=\"centerInside\"\n                android:src=\"@drawable/addcontacts_iv_alarm\" />\n\n            <TextView\n                android:layout_width=\"wrap_content\"\n                android:layout_height=\"wrap_content\"\n                android:layout_marginStart=\"20dp\"\n                android:textSize=\"15sp\"\n                android:layout_gravity=\"center_vertical\"\n                android:text=\"Alarm\"\n                android:textStyle=\"bold\"/>\n\n\n        </LinearLayout>\n\n\n        <!--offBtn-->\n        <LinearLayout\n            android:id=\"@+id/LinearLayout9\"\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"60dp\"\n            android:gravity=\"center_vertical|center_horizontal\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/linearLayout8\">\n\n            <Button\n                android:id=\"@+id/add_noti_offBtn\"\n                android:layout_width=\"60dp\"\n                android:layout_height=\"50dp\"\n                android:text=\"OFF\" />\n\n            <Button\n                android:id=\"@+id/add_noti_10Btn\"\n                android:layout_width=\"100dp\"\n                android:layout_height=\"50dp\"\n                android:text=\"10분뒤 알림\"/>\n\n            <Button\n                android:id=\"@+id/add_noti_20Btn\"\n                android:layout_width=\"100dp\"\n                android:layout_height=\"50dp\"\n                android:text=\"20분뒤 알림\"/>\n\n        </LinearLayout>\n\n\n\n        <!--save/cancel btn-->\n        <LinearLayout\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"60dp\"\n            android:gravity=\"center_vertical\"\n            android:layout_marginTop=\"5dp\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toBottomOf=\"@+id/LinearLayout9\">\n\n            <Button\n                android:id=\"@+id/add_saveBtn\"\n                android:layout_width=\"120dp\"\n                android:layout_height=\"65dp\"\n                android:layout_marginStart=\"60dp\"\n                android:backgroundTint=\"@color/sub1\"\n                android:text=\"SAVE\"\n                android:textSize=\"18sp\"\n                android:textStyle=\"bold\" />\n\n            <Button\n                android:id=\"@+id/add_cancelBtn\"\n                android:layout_width=\"120dp\"\n                android:layout_height=\"65dp\"\n                android:layout_marginStart=\"50dp\"\n                android:backgroundTint=\"@color/text\"\n                android:text=\"CANCEL\"\n                android:textSize=\"18sp\"\n                android:textStyle=\"bold\" />\n\n        </LinearLayout>\n\n\n\n\n\n\n    </androidx.constraintlayout.widget.ConstraintLayout>\n\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_add_contact_dialog.xml b/app/src/main/res/layout/fragment_add_contact_dialog.xml
+--- a/app/src/main/res/layout/fragment_add_contact_dialog.xml	(revision 51bc0318f81bafde3dafa9946d0c5f379066907f)
++++ b/app/src/main/res/layout/fragment_add_contact_dialog.xml	(date 1693979449706)
+@@ -4,7 +4,7 @@
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+-    tools:context=".addContactDialogFragment">
++    tools:context=".AddContactDialogFragment">
+ 
+         <!--전체 레이아웃-->
+     <androidx.constraintlayout.widget.ConstraintLayout
+@@ -22,10 +22,10 @@
+ 
+             <ImageView
+                 android:id="@+id/personIcon"
+-                android:layout_width="40dp"
+-                android:layout_height="40dp"
+-                android:layout_marginStart="30dp"
+-                android:layout_marginTop="30dp"
++                android:layout_width="25dp"
++                android:layout_height="25dp"
++                android:layout_marginStart="25dp"
++                android:layout_marginTop="20dp"
+                 android:src="@drawable/addcontacts_iv_add"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+@@ -44,10 +44,10 @@
+             <!-- TODO: Update blank fragment layout -->
+             <de.hdodenhof.circleimageview.CircleImageView
+                 android:id="@+id/cardImage"
+-                android:layout_width="100dp"
+-                android:layout_height="100dp"
++                android:layout_width="50dp"
++                android:layout_height="50dp"
+                 android:layout_centerHorizontal="true"
+-                android:layout_marginTop="100dp"
++                android:layout_marginTop="30dp"
+                 android:layout_weight="1"
+                 android:contentDescription="circleView"
+                 android:src="@drawable/tab_iv_mypage_fill"
+@@ -69,8 +69,8 @@
+                 android:id="@+id/add_editName"
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp"
+-                android:layout_marginLeft="150dp"
+-                android:layout_marginRight="150dp"
++                android:layout_marginLeft="100dp"
++                android:layout_marginRight="100dp"
+                 android:hint="Name"
+                 android:textAlignment="center"
+                 android:textStyle="bold"
+@@ -90,8 +90,8 @@
+                 android:id="@+id/add_nickName"
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp"
+-                android:layout_marginStart="150dp"
+-                android:layout_marginEnd="150dp"
++                android:layout_marginStart="120dp"
++                android:layout_marginEnd="120dp"
+                 android:hint="NickName"
+                 android:textSize="13sp"
+                 android:textAlignment="center"
+@@ -103,7 +103,6 @@
+             android:id="@+id/linearLayout5"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+-            android:layout_marginTop="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+@@ -112,7 +111,7 @@
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
+                 android:layout_gravity="center_vertical"
+-                android:layout_marginStart="30dp"
++                android:layout_marginStart="10dp"
+                 android:scaleType="centerInside"
+                 android:src="@drawable/mypage_iv_mobile" />
+ 
+@@ -121,8 +120,8 @@
+                 android:inputType="phone"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+-                android:layout_marginStart="20dp"
+-                android:layout_marginEnd="80dp"
++                android:layout_marginStart="10dp"
++                android:layout_marginEnd="50dp"
+                 android:hint="Mobile" />
+ 
+         </LinearLayout>
+@@ -131,7 +130,6 @@
+             android:id="@+id/linearLayout6"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+-            android:layout_marginTop="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+@@ -140,7 +138,7 @@
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
+                 android:layout_gravity="center_vertical"
+-                android:layout_marginStart="30dp"
++                android:layout_marginStart="10dp"
+                 android:scaleType="centerInside"
+                 android:src="@drawable/mypage_iv_specialist" />
+ 
+@@ -149,8 +147,8 @@
+                 android:inputType="text"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+-                android:layout_marginStart="20dp"
+-                android:layout_marginEnd="80dp"
++                android:layout_marginStart="10dp"
++                android:layout_marginEnd="50dp"
+                 android:hint="Specialist" />
+         </LinearLayout>
+ 
+@@ -158,7 +156,6 @@
+             android:id="@+id/linearLayout7"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+-            android:layout_marginTop="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+@@ -167,7 +164,7 @@
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
+                 android:layout_gravity="center_vertical"
+-                android:layout_marginStart="30dp"
++                android:layout_marginStart="10dp"
+                 android:scaleType="centerInside"
+                 android:src="@drawable/mypage_iv_email" />
+ 
+@@ -176,18 +173,17 @@
+                 android:inputType="textEmailAddress"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+-                android:layout_marginStart="20dp"
+-                android:layout_marginEnd="80dp"
++                android:layout_marginStart="10dp"
++                android:layout_marginEnd="50dp"
+                 android:hint="Mail" />
+         </LinearLayout>
+ 
+ 
+-        <!--notification Btn-->
++
+         <LinearLayout
+             android:id="@+id/linearLayout8"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+-            android:layout_marginTop="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+@@ -196,10 +192,10 @@
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
+                 android:layout_gravity="center_vertical"
+-                android:layout_marginStart="30dp"
++                android:layout_marginStart="10dp"
+                 android:scaleType="centerInside"
+                 android:src="@drawable/addcontacts_iv_alarm" />
+-
++<!--//-
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+@@ -209,7 +205,7 @@
+                 android:text="Alarm"
+                 android:textStyle="bold"/>
+ 
+-
++                -->
+         </LinearLayout>
+ 
+ 
+@@ -221,25 +217,26 @@
+             android:gravity="center_vertical|center_horizontal"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+-            app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
++            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+ 
+             <Button
+                 android:id="@+id/add_noti_offBtn"
+                 android:layout_width="60dp"
+                 android:layout_height="50dp"
++                android:layout_marginStart="20dp"
+                 android:text="OFF" />
+ 
+             <Button
+                 android:id="@+id/add_noti_10Btn"
+                 android:layout_width="100dp"
+                 android:layout_height="50dp"
+-                android:text="10분뒤 알림"/>
++                android:text="10분뒤 알림" />
+ 
+             <Button
+                 android:id="@+id/add_noti_20Btn"
+                 android:layout_width="100dp"
+                 android:layout_height="50dp"
+-                android:text="20분뒤 알림"/>
++                android:text="20분뒤 알림" />
+ 
+         </LinearLayout>
+ 
+@@ -249,17 +246,15 @@
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="60dp"
+-            android:gravity="center_vertical"
+-            android:layout_marginTop="5dp"
++            android:gravity="center_vertical|center_horizontal"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/LinearLayout9">
+ 
+             <Button
+                 android:id="@+id/add_saveBtn"
+-                android:layout_width="120dp"
+-                android:layout_height="65dp"
+-                android:layout_marginStart="60dp"
++                android:layout_width="100dp"
++                android:layout_height="55dp"
+                 android:backgroundTint="@color/sub1"
+                 android:text="SAVE"
+                 android:textSize="18sp"
+@@ -267,9 +262,9 @@
+ 
+             <Button
+                 android:id="@+id/add_cancelBtn"
+-                android:layout_width="120dp"
+-                android:layout_height="65dp"
+-                android:layout_marginStart="50dp"
++                android:layout_width="100dp"
++                android:layout_height="55dp"
++                android:layout_marginStart="10dp"
+                 android:backgroundTint="@color/text"
+                 android:text="CANCEL"
+                 android:textSize="18sp"
+@@ -279,9 +274,6 @@
+ 
+ 
+ 
+-
+-
+-
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ 
+ </FrameLayout>
+\ No newline at end of file
