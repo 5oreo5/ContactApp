@@ -8,11 +8,13 @@ data class Item(
     val specialist: String,
     val email: String,
     val event: String,
-    val status: String
+    val status: String,
+    var checkbox:Boolean=false
 )
 
 object NewListRepository {
     fun getNewList(): List<Item> {
+
         val dataList = mutableListOf<Item>()
 
         dataList.add(
@@ -146,8 +148,12 @@ object NewListRepository {
                 "OFF",
                 "내선 805"
             )
+
+
         )
         return dataList
     }
+
+
 }
 
