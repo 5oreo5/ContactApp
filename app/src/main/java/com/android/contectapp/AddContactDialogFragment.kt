@@ -26,10 +26,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [addContactDialogFragment.newInstance] factory method to
+ * Use the [AddContactDialogFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class addContactDialogFragment : Fragment() {
+class AddContactDialogFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
