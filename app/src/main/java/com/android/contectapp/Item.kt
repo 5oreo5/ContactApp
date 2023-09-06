@@ -8,13 +8,14 @@ data class Item(
     val specialist: String,
     val email: String,
     val event: String,
-    val status: String
+    val status: String,
+    var checkbox:Boolean=false
 )
 
 object NewListRepository {
+  
     fun getNewList(): MutableList<Item> {
         val dataList = mutableListOf<Item>()
-
         dataList.add(
             Item(
                 R.drawable.detail_iv_1,
@@ -150,4 +151,3 @@ object NewListRepository {
         return dataList
     }
 }
-
