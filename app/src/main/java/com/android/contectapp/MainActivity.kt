@@ -7,19 +7,27 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.Settings
+import android.view.ContextMenu
+import android.view.View
+import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater)}
-    private val tabTextList = listOf("detail_page","contacts", "my_page")
-    private val tabIconList = listOf(R.drawable.tab_iv_detailpage,R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
+    lateinit var tabLayout: TabLayout
+    private val tabTextList = listOf("contacts", "my_page")
+    private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
+    private lateinit var contactListFragment: ContactListFragment
+    private lateinit var detailContactFragment: DetailContactFragment
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -36,7 +44,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.mainViewPager.adapter = MainAdapter(this)
-
+        tabLayout = binding.mainTabLayout
+        contactListFragment = ContactListFragment()
+        detailContactFragment = DetailContactFragment()
         // READ_CONTACTS 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -49,13 +59,11 @@ class MainActivity : AppCompatActivity() {
             // READ_CONTACTS 권한을 요청
             requestPermissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
         }
-
         TabLayoutMediator(binding.mainTabLayout,binding.mainViewPager) { tab, position ->
             tab.text = tabTextList[position]
             tab.setIcon(tabIconList[position])
         }.attach()
     }
-
     private fun loadContacts() {
         // 연락처 데이터를 불러오는 작업을 수행
         lifecycleScope.launch(Dispatchers.IO) {
@@ -92,5 +100,4 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
-
 }
