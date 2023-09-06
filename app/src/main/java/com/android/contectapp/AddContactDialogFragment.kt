@@ -7,72 +7,43 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.android.contectapp.databinding.FragmentAddContactDialogBinding
 import java.util.regex.Pattern
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
-
-/**
- * A simple [Fragment] subclass.
- * Use the [addContactDialogFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddContactDialogFragment : DialogFragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var useTextWatcher: TextWatcher
-    private lateinit var binding : FragmentAddContactDialogBinding
+    private lateinit var binding: FragmentAddContactDialogBinding
+
+    private lateinit var saveBtn : Button
+    private lateinit var cancelBtn : Button
+    private lateinit var editName : EditText
+    private lateinit var editMobile : EditText
+    private lateinit var editSpecial : EditText
+    private lateinit var editMail : EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        //isCancelable = true
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAddContactDialogBinding.inflate(inflater,container,false)
+        binding = FragmentAddContactDialogBinding.inflate(inflater, container, false)
 
-        var saveBtn = binding.addSaveBtn
-        var cancelBtn = binding.addCancelBtn
-        var editName = binding.addEditName
-        var editMobile= binding.addMobileEdit
-        var editSpecial = binding.addSpecialEdit
-        var editMail = binding.addMailEdit
-        
-        useTextWatcher = object : TextWatcher {
-            val maxLength = 15
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+        saveBtn = binding.addSaveBtn
+        cancelBtn = binding.addCancelBtn
+        editName = binding.addEditName
+        editMobile = binding.addMobileEdit
+        editSpecial = binding.addSpecialEdit
+        editMail = binding.addMailEdit
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s?.length ?: 0 > maxLength) {
-                    editName.error = "최대 $maxLength 글자까지 입력 가능합니다."
-                } else {
-                    editName.error = null // 이전에 설정된 오류 지우기.
-                }
-            }
-        }
+        editMail.addTextChangedListener(useTextWatcher(editMail))
 
         saveBtn.setOnClickListener() {
             // 이름, 번호, 담당 ,메일주소
@@ -99,38 +70,25 @@ class AddContactDialogFragment : DialogFragment() {
                 Toast.makeText(requireContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show()
 
             }
-
-
             cancelBtn.setOnClickListener() {
                 requireActivity().supportFragmentManager.popBackStack()
             }
-
-
         }
         return binding.root
-
-/*
-        companion object {
-            /**
-             * Use this factory method to create a new instance of
-             * this fragment using the provided parameters.
-             *
-             * @param param1 Parameter 1.
-             * @param param2 Parameter 2.
-             * @return A new instance of fragment addContactDialogFragment.
-             */
-            // TODO: Rename and change types and number of parameters
-            @JvmStatic
-            fun newInstance(param1: String, param2: String) =
-                addContactDialogFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
-        }
-
- */
     }
 
+    private fun useTextWatcher(editText: EditText): TextWatcher {
+        return object : TextWatcher {
+            val maxLength = 15
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if ((s?.length ?: 0) > maxLength) {
+                    editMail.error = "최대 $maxLength 글자 까지 입력 가능 합니다."
+                } else {
+                    editMail.error = null // 이전에 설정된 오류 지우기.
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+    }
 }
