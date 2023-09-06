@@ -4,9 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
-import androidx.recyclerview.widget.LinearLayoutManager
 
-class recyclerview_item_list : AppCompatActivity() {
+class Recyclerview_item_list : AppCompatActivity() {
     val datalist= mutableListOf<Item>()
     lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     var log="로그"
