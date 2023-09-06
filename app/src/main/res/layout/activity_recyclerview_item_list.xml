@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".recyclerview_item_list">
+    tools:context=".Recyclerview_item_list">
 
     <TextView
         android:id="@+id/recyclerview_collection"

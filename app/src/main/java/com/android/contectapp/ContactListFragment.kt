@@ -13,13 +13,15 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
     private lateinit var binding : FragmentContactListBinding
     private lateinit var rv : RecyclerView
-    private lateinit var adapter : recyclerviewAdapter
+    private lateinit var adapter : RecyclerviewAdapter
     private var items = NewListRepository.getNewList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+
+
     }
 
     override fun onCreateView(
@@ -27,19 +29,22 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
+
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         rv = binding.recyclerview
         rv.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = recyclerviewAdapter(items as MutableList<Item>)
+        adapter = RecyclerviewAdapter(items as MutableList<Item>)
         rv.adapter = adapter
 
-        adapter.setOnItemClickListener(object : recyclerviewAdapter.OnItemClickListener {
+        adapter.setOnItemClickListener(object : RecyclerviewAdapter.OnItemClickListener {
 
             override fun onItemClick(data: Item, position: Int) {
                 val image = data.image
@@ -64,6 +69,15 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 detailContactFragment.arguments = bundle
             }
         })
+
+        val addButton = binding.btnContactAddList
+        addButton.setOnClickListener {
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            val dialogFragment = AddContactDialogFragment()
+
+            dialogFragment.show(fragmentTransaction, "AddContactDialogFragment")
+
+        }
     }
 
 }
