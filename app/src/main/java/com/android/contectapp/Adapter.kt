@@ -5,13 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityGirdviewItemListBinding
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
-import java.lang.RuntimeException
 
 class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
-    RecyclerView.Adapter<Adapter.Holder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(data: Item, position: Int)
@@ -27,35 +30,60 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
         fun onClick(view: View, position: Int)
     }
 
-    fun setGridMode(gridMode: Boolean) {
-        isGridMode = gridMode
-        notifyDataSetChanged()
+    fun setGridMode(isGridMode: Boolean) {
+        Log.d("정보" , "setGridMode: isGridMode=$isGridMode")
+        this.isGridMode = isGridMode
+        notifyDataSetChanged() // 다시 스케치 하라.
     }
 
     var itemClick: ItemClick? = null
     var log = "로그"
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        Log.d("Adapter", "onCreateViewHolder: isGridMode=$isGridMode")
+        if (isGridMode) {
+            val binding = ActivityGirdviewItemListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ItemGridHolder(binding)
+        } else {
+            val binding = ActivityRecyclerviewItemListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
 
-        if (isGridMode) R.layout.activity_girdview_item_list else R.layout.activity_recyclerview_item_list
-
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ActivityRecyclerviewItemListBinding.inflate(inflater, parent, false)
-        Log.d(log, "onCreateViewHolder called")
-        return Holder(binding)
+            return ItemListHolder(binding)
+        }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val pos = Item[position]
-        holder.name.text = pos.name
-        holder.specialist.text = pos.specialist
-        holder.image.setImageResource(pos.image)
-
-        holder.itemView.setOnClickListener {
-
-            val position = holder.bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                listener?.onItemClick(pos, position)
+        if (isGridMode) {
+            if (holder is ItemGridHolder) {
+                holder.name.text = pos.name
+                holder.specialist.text = pos.specialist
+                holder.image.setImageResource(pos.image)
+                holder.itemView.setOnClickListener {
+                    val position = holder.bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener?.onItemClick(pos, position)
+                    }
+                }
+            }
+        } else {
+            if (holder is ItemListHolder) {
+                holder.name2.text = pos.name
+                holder.specialist2.text = pos.specialist
+                holder.image2.setImageResource(pos.image)
+                holder.itemView.setOnClickListener {
+                    val position = holder.bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener?.onItemClick(pos, position)
+                    }
+                }
             }
         }
     }
@@ -68,7 +96,14 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
         return position.toLong()
     }
 
-    inner class Holder(val binding: ActivityRecyclerviewItemListBinding) :
+    inner class ItemListHolder(val binding: ActivityRecyclerviewItemListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val name2 = binding.recyclerviewName
+        val specialist2 = binding.recyclerviewSpeciallist
+        val image2 = binding.recyclerviewIvProfile
+    }
+
+    inner class ItemGridHolder(val binding: ActivityGirdviewItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val name = binding.recyclerviewName
         val specialist = binding.recyclerviewSpeciallist
