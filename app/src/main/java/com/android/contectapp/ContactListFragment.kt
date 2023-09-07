@@ -62,12 +62,12 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 //                when (p2) {
 //                    0 -> {
 //                        binding.recyclerview.visibility = View.VISIBLE
-//                        binding.recyclerview.visibility = View.GONE
+//
 //                    }
 //                    1 -> {
 //                        binding.recyclerview.visibility = View.GONE
-//                        binding.recyclerview.visibility = View.VISIBLE
-//                    }
+//
+//                    } // View.~~~ 하여서 뷰를 고정시켜 놓았다.
 //                }
 
             }
