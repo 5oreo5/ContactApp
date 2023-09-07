@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.contectapp.databinding.ActivityGirdviewItemListBinding
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 
 class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
-    RecyclerView.Adapter<Adapter.Holder>(), ItemTouchHelperListener {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
 
     interface OnItemClickListener {
         fun onItemClick(data: Item, position: Int)
@@ -18,31 +19,57 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
+    fun setGridMode(isGridMode: Boolean) {
+        Log.d("정보" , "setGridMode: isGridMode=$isGridMode")
+        this.isGridMode = isGridMode
+        notifyDataSetChanged() // 다시 스케치 하라.
     }
-    fun setGridMode(gridMode: Boolean) {
-        isGridMode = gridMode
-        notifyDataSetChanged()
-    }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        Log.d("Adapter", "onCreateViewHolder: isGridMode=$isGridMode")
+        if (isGridMode) {
+            val binding = ActivityGirdviewItemListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ItemGridHolder(binding)
+        } else {
+            val binding = ActivityRecyclerviewItemListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
 
-        if (isGridMode) R.layout.activity_girdview_item_list else R.layout.activity_recyclerview_item_list
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ActivityRecyclerviewItemListBinding.inflate(inflater, parent, false)
-        return Holder(binding)
+            return ItemListHolder(binding)
+        }
     }
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val pos = item[position]
-        holder.name.text = pos.name
-        holder.specialist.text = pos.specialist
-        holder.image.setImageResource(pos.image)
-        holder.phone.text = pos.phone
-
-        holder.itemView.setOnClickListener {
-            val position = holder.bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                listener?.onItemClick(pos, position)
+        if (isGridMode) {
+            if (holder is ItemGridHolder) {
+                holder.name.text = pos.name
+                holder.specialist.text = pos.specialist
+                holder.image.setImageResource(pos.image)
+                holder.itemView.setOnClickListener {
+                    val position = holder.bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener?.onItemClick(pos, position)
+                    }
+                }
+            }
+        } else {
+            if (holder is ItemListHolder) {
+                holder.name.text = pos.name
+                holder.phone.text = pos.phone
+                holder.specialist.text = pos.specialist
+                holder.image.setImageResource(pos.image)
+                holder.itemView.setOnClickListener {
+                    val position = holder.bindingAdapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener?.onItemClick(pos, position)
+                    }
+                }
             }
         }
     }
@@ -67,7 +94,7 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     override fun onItemSwipe(position: Int) {
     }
 
-    inner class Holder(val binding: ActivityRecyclerviewItemListBinding) :
+    inner class ItemListHolder(val binding: ActivityRecyclerviewItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val mainRv = binding.mainRv
         val name = binding.recyclerviewName
@@ -75,4 +102,11 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
         val image = binding.recyclerviewIvProfile
         val phone = binding.recyclerviewMobile
     }
+    inner class ItemGridHolder(val binding: ActivityGirdviewItemListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val name = binding.recyclerviewName
+        val specialist = binding.recyclerviewSpeciallist
+        val image = binding.recyclerviewIvProfile
+    }
+
 }

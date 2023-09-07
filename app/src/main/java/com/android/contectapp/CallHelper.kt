@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.net.Uri
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,8 +16,10 @@ class CallHelper(val con: Context, val rv : Adapter): ItemTouchHelper.Callback()
     ): Boolean { return false }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        val holder = viewHolder as Adapter.Holder
-        val phoneNumber = holder.phone.text
+        val holder = viewHolder
+        val phoneNumber = if (holder is Adapter.ItemListHolder) {
+            holder.phone.text
+        } else { "" }
         val callUriSwipedPerson = Uri.parse("tel:$phoneNumber")
         val callIntent = Intent(Intent.ACTION_CALL, callUriSwipedPerson)
         con.startActivity(callIntent)
@@ -32,15 +35,26 @@ class CallHelper(val con: Context, val rv : Adapter): ItemTouchHelper.Callback()
         dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean
     ) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            val view = (viewHolder as Adapter.Holder).mainRv
-            getDefaultUIUtil().onDraw(c, recyclerView, view, dX, dY, actionState, isCurrentlyActive)
+            val view = if (viewHolder is Adapter.ItemListHolder) {
+                viewHolder.mainRv
+            } else { "" }
+
+            view?.let {
+                getDefaultUIUtil().onDraw(c, recyclerView,
+                    it as View?, dX, dY, actionState, isCurrentlyActive)
+            }
         }
     }
     override fun clearView(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
     ) {
-        getDefaultUIUtil().clearView((viewHolder as Adapter.Holder).mainRv)
+        val view = if (viewHolder is Adapter.ItemListHolder) {
+            viewHolder.mainRv
+        } else { "" }
+        view?.let {
+            getDefaultUIUtil().clearView(it as View?)
+        }
     }
 }
 interface ItemTouchHelperListener {
