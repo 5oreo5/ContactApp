@@ -1,7 +1,6 @@
 package com.android.contectapp
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

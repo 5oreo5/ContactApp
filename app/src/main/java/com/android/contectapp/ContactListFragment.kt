@@ -19,9 +19,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     private lateinit var binding : FragmentContactListBinding
     private lateinit var rv : RecyclerView
     private lateinit var adapter : Adapter
-    private lateinit var binding: FragmentContactListBinding
-    private lateinit var rv: RecyclerView
-    private lateinit var adapter: Adapter
     private var items = NewListRepository.getNewList()
     private var isGridMode = true
 
@@ -72,10 +69,8 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
         rv = binding.recyclerview
         rv.layoutManager = LinearLayoutManager(requireContext())
-        adapter = Adapter(items as MutableList<Item>, isGridMode)
+        adapter = Adapter(items, isGridMode)
 
-
-        adapter = Adapter(items as MutableList<Item>)
         rv.adapter = adapter
 
         adapter.setOnItemClickListener(object : Adapter.OnItemClickListener {

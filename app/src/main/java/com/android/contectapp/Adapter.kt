@@ -11,11 +11,6 @@ import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 import java.lang.RuntimeException
 
 class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
-
-import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
-
-class Adapter(val Item: MutableList<Item>) :
-
     RecyclerView.Adapter<Adapter.Holder>() {
 
     interface OnItemClickListener {
@@ -30,15 +25,12 @@ class Adapter(val Item: MutableList<Item>) :
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
-
-
     }
+
     fun setGridMode(gridMode: Boolean) {
         isGridMode = gridMode
         notifyDataSetChanged()
-
     }
-
 
     var itemClick: ItemClick? = null
     var log = "로그"
@@ -60,9 +52,6 @@ class Adapter(val Item: MutableList<Item>) :
         holder.image.setImageResource(pos.image)
 
         holder.itemView.setOnClickListener {
-
-            itemClick?.onClick(it, position)
-        }
 
             val position = holder.bindingAdapterPosition
             if (position != RecyclerView.NO_POSITION) {
