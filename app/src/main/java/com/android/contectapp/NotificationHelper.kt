@@ -81,6 +81,7 @@ class NotificationHelper(base: Context?) : ContextWrapper(base) {
     }
 
     // notification 설정
+
     fun createNotification(title: String, content: String): NotificationCompat.Builder {
         return NotificationCompat.Builder(applicationContext, channelID)
             .setContentTitle(title)
@@ -88,15 +89,20 @@ class NotificationHelper(base: Context?) : ContextWrapper(base) {
             .setSmallIcon(R.drawable.ic_launcher_background)
     }
 
+
     // 알림 표시
     fun showNotification(notificationId: Int, notificationBuilder: NotificationCompat.Builder) {
         val notificationManager = getManager()
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
+
     // 알림 취소
+
     fun cancelNotification(notificationId: Int) {
         val notificationManager = getManager()
         notificationManager.cancel(notificationId)
     }
+
+
 }

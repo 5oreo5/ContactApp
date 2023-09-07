@@ -16,7 +16,7 @@ data class Item(
     val status: String,
     var isfavorite: Boolean
 ) : Parcelable
-    
+
 
 object NewListRepository {
    private val dataList = mutableListOf<Item>()

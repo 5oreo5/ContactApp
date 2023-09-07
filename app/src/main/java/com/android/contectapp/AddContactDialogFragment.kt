@@ -18,6 +18,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import com.android.contectapp.databinding.FragmentAddContactDialogBinding
 import java.util.regex.Pattern
 
@@ -93,7 +94,7 @@ class AddContactDialogFragment : DialogFragment() {
 
 
             if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "아이디를 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else if (mobile.isEmpty()) {
                 Toast.makeText(requireContext(), "번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else if (special.isEmpty()) {
@@ -104,12 +105,22 @@ class AddContactDialogFragment : DialogFragment() {
                 Toast.makeText(requireContext(), "이메일 형식이 아닙니다", Toast.LENGTH_SHORT).show()
             } else if (!Pattern.matches("^010-\\d{4}-\\d{4}\$", mobile)) {
                 Toast.makeText(requireContext(), "올바른 핸드폰 번호가 아닙니다.", Toast.LENGTH_SHORT).show()
-            } else if (!Pattern.matches("^[가-힣a-zA-Z]*\$", special)) {
-                Toast.makeText(requireContext(), "문자만 입력해 주세요", Toast.LENGTH_SHORT).show()
+            } else if (!Pattern.matches("^[A-Za-z가-힣]+$", special)) {
+                Toast.makeText(requireContext(), "한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show()
 
+                val bundle = Bundle()
+                bundle.putString("k_name",name)
+                arguments?.let {
+                    setFragmentResult("r_name",bundle) }
+
+                dismiss()
+
             }
+
+
+
         }
         binding.addCancelBtn.setOnClickListener() {
             dismiss()
