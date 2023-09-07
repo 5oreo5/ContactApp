@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
     private lateinit var contactListFragment: ContactListFragment
     private lateinit var detailContactFragment: DetailContactFragment
+    private val tabTextList = listOf("contacts", "my_page")
+    private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {

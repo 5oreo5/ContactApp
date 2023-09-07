@@ -16,11 +16,12 @@ data class Item(
     val status: String,
     var isfavorite: Boolean
 ) : Parcelable
+    
 
 object NewListRepository {
-    fun getNewList(): List<Item> {
+  
+    fun getNewList(): MutableList<Item> {
         val dataList = mutableListOf<Item>()
-
         dataList.add(
             Item(
                 R.drawable.detail_iv_1,
@@ -167,4 +168,3 @@ object NewListRepository {
         return dataList
     }
 }
-

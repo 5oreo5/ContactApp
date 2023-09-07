@@ -6,17 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android.contectapp.databinding.ActivityGirdviewItemListBinding
-import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
-import java.lang.RuntimeException
-
-class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
-
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 
-class Adapter(val Item: MutableList<Item>) :
-
-    RecyclerView.Adapter<Adapter.Holder>() {
+class RecyclerviewAdapter(val Item: MutableList<Item>) :
+    RecyclerView.Adapter<RecyclerviewAdapter.Holder>() {
 
     interface OnItemClickListener {
         fun onItemClick(data: Item, position: Int)
@@ -30,13 +23,6 @@ class Adapter(val Item: MutableList<Item>) :
 
     interface ItemClick {
         fun onClick(view: View, position: Int)
-
-
-    }
-    fun setGridMode(gridMode: Boolean) {
-        isGridMode = gridMode
-        notifyDataSetChanged()
-
     }
 
 
@@ -44,9 +30,6 @@ class Adapter(val Item: MutableList<Item>) :
     var log = "로그"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-
-        if (isGridMode) R.layout.activity_girdview_item_list else R.layout.activity_recyclerview_item_list
-
         val inflater = LayoutInflater.from(parent.context)
         val binding = ActivityRecyclerviewItemListBinding.inflate(inflater, parent, false)
         Log.d(log, "onCreateViewHolder called")
@@ -60,15 +43,9 @@ class Adapter(val Item: MutableList<Item>) :
         holder.image.setImageResource(pos.image)
 
         holder.itemView.setOnClickListener {
-
             itemClick?.onClick(it, position)
         }
 
-            val position = holder.bindingAdapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                listener?.onItemClick(pos, position)
-            }
-        }
     }
 
     override fun getItemCount(): Int {
@@ -86,3 +63,6 @@ class Adapter(val Item: MutableList<Item>) :
         val image = binding.recyclerviewIvProfile
     }
 }
+
+
+
