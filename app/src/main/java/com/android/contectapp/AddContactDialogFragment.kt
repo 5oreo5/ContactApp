@@ -1,7 +1,5 @@
 package com.android.contectapp
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Point
 import android.os.Bundle
@@ -11,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -40,26 +37,20 @@ class AddContactDialogFragment : DialogFragment() {
         params?.width = (deviceWidth * 0.9).toInt()
         params?.height = (deviceHeight * 0.8).toInt()
         dialog?.window?.attributes = params as WindowManager.LayoutParams
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddContactDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         notificationHelper
         binding.addNickName.addTextChangedListener(useTextWatcher(binding.addNickName))
 
@@ -112,9 +103,7 @@ class AddContactDialogFragment : DialogFragment() {
             val message = "20분 후 알림이 울립니다."
             scheduleNotification(delayMillis, message)
         }
-        return binding.root
     }
-
     private fun useTextWatcher(editText: EditText): TextWatcher {
         return object : TextWatcher {
             val maxLength = 15
