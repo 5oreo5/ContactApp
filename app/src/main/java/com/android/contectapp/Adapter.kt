@@ -26,9 +26,6 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
         this.listener = listener
     }
 
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
 
     fun setGridMode(isGridMode: Boolean) {
         Log.d("정보" , "setGridMode: isGridMode=$isGridMode")
@@ -36,7 +33,6 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
         notifyDataSetChanged() // 다시 스케치 하라.
     }
 
-    var itemClick: ItemClick? = null
     var log = "로그"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -75,9 +71,9 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
             }
         } else {
             if (holder is ItemListHolder) {
-                holder.name2.text = pos.name
-                holder.specialist2.text = pos.specialist
-                holder.image2.setImageResource(pos.image)
+                holder.name.text = pos.name
+                holder.specialist.text = pos.specialist
+                holder.image.setImageResource(pos.image)
                 holder.itemView.setOnClickListener {
                     val position = holder.bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
@@ -98,9 +94,9 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
 
     inner class ItemListHolder(val binding: ActivityRecyclerviewItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val name2 = binding.recyclerviewName
-        val specialist2 = binding.recyclerviewSpeciallist
-        val image2 = binding.recyclerviewIvProfile
+        val name = binding.recyclerviewName
+        val specialist = binding.recyclerviewSpeciallist
+        val image = binding.recyclerviewIvProfile
     }
 
     inner class ItemGridHolder(val binding: ActivityGirdviewItemListBinding) :

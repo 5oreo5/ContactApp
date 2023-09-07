@@ -57,19 +57,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 Log.d("isGridMode", "isGridMode=$isGridMode")
                 adapter.setGridMode(isGridMode)
                 rv.adapter = adapter // 계속 같은 holder를 쓰는걸 다시 만들어준다.
-
-
-//                when (p2) {
-//                    0 -> {
-//                        binding.recyclerview.visibility = View.VISIBLE
-//
-//                    }
-//                    1 -> {
-//                        binding.recyclerview.visibility = View.GONE
-//
-//                    } // View.~~~ 하여서 뷰를 고정시켜 놓았다.
-//                }
-
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
