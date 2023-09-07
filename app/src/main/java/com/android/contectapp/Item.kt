@@ -24,7 +24,7 @@ object NewListRepository {
    fun addItem(newItem: Item) {
       //  dataList.add(newItem)
     }
-    fun getNewList(): List<Item> {
+    fun getNewList(): MutableList<Item> {
 
         dataList.add(
             Item(
@@ -182,9 +182,7 @@ object NewListRepository {
                 false
             )
         )
-        val log="로그"
-        return dataList.sortedBy {it.name }.also {
-            Log.d(log, "${it.size}")
-        }
+        dataList.sortBy { it.name }
+        return dataList
     }
 }

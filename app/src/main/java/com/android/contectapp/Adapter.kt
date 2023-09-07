@@ -79,7 +79,7 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
         return item.size
     }
     override fun getItemId(position: Int): Long {
-        return Item[position].name.hashCode().toLong()
+        return item[position].name.hashCode().toLong()
     }
     // 아이템 드래그 시 호출
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {
@@ -110,5 +110,4 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
         val specialist = binding.recyclerviewSpeciallist
         val image = binding.recyclerviewIvProfile
     }
-
 }
