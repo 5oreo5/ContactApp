@@ -10,7 +10,7 @@ import com.android.contectapp.databinding.ActivityGirdviewItemListBinding
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 import java.lang.RuntimeException
 
-class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
+class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     RecyclerView.Adapter<Adapter.Holder>() {
 
     interface OnItemClickListener {
@@ -46,7 +46,7 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        val pos = Item[position]
+        val pos = item[position]
         holder.name.text = pos.name
         holder.specialist.text = pos.specialist
         holder.image.setImageResource(pos.image)
@@ -61,7 +61,7 @@ class Adapter(val Item: MutableList<Item>, private var isGridMode: Boolean) :
     }
 
     override fun getItemCount(): Int {
-        return Item.size
+        return item.size
     }
 
     override fun getItemId(position: Int): Long {

@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import androidx.recyclerview.widget.GridLayoutManager
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.FragmentContactListBinding
@@ -16,9 +17,9 @@ import com.android.contectapp.databinding.FragmentContactListBinding
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
-    private lateinit var binding : FragmentContactListBinding
-    private lateinit var rv : RecyclerView
-    private lateinit var adapter : Adapter
+    private lateinit var binding: FragmentContactListBinding
+    private lateinit var rv: RecyclerView
+    private lateinit var adapter: Adapter
     private var items = NewListRepository.getNewList()
     private var isGridMode = true
 
@@ -26,6 +27,8 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+
+
         }
     }
 
@@ -53,6 +56,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         }
         return binding.root
     }
+
     private fun updateRecyclerViewMode() {
         adapter = Adapter(items as MutableList<Item>, isGridMode)
         rv.layoutManager = if (isGridMode) {
@@ -67,44 +71,45 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rv = binding.recyclerview
-        rv.layoutManager = LinearLayoutManager(requireContext())
-        adapter = Adapter(items, isGridMode)
 
-        rv.adapter = adapter
+            rv = binding.recyclerview
+            rv.layoutManager = LinearLayoutManager(requireContext())
+            adapter = Adapter(items, isGridMode)
 
-        adapter.setOnItemClickListener(object : Adapter.OnItemClickListener {
+            rv.adapter = adapter
 
-            override fun onItemClick(data: Item, position: Int) {
-                val image = data.image
-                val name = data.name
-                val nickname = data.nickname
-                val phone = data.phone
-                val specialist = data.specialist
-                val email = data.email
-                val event = data.event
-                val status = data.status
+            adapter.setOnItemClickListener(object : Adapter.OnItemClickListener {
 
-                val detailContactFragment = DetailContactFragment()
-                val bundle = Bundle()
-                bundle.putInt("image", image)
-                bundle.putString("name", name)
-                bundle.putString("nickname", nickname)
-                bundle.putString("phone", phone)
-                bundle.putString("specialist", specialist)
-                bundle.putString("email", email)
-                bundle.putString("event", event)
-                bundle.putString("status", status)
-                detailContactFragment.arguments = bundle
+                override fun onItemClick(data: Item, position: Int) {
+                    val image = data.image
+                    val name = data.name
+                    val nickname = data.nickname
+                    val phone = data.phone
+                    val specialist = data.specialist
+                    val email = data.email
+                    val event = data.event
+                    val status = data.status
 
-                detailContactFragment.show(parentFragmentManager, "DetailContactFragment")
+                    val detailContactFragment = DetailContactFragment()
+                    val bundle = Bundle()
+                    bundle.putInt("image", image)
+                    bundle.putString("name", name)
+                    bundle.putString("nickname", nickname)
+                    bundle.putString("phone", phone)
+                    bundle.putString("specialist", specialist)
+                    bundle.putString("email", email)
+                    bundle.putString("event", event)
+                    bundle.putString("status", status)
+                    detailContactFragment.arguments = bundle
+
+                    detailContactFragment.show(parentFragmentManager, "DetailContactFragment")
+                }
+            })
+            val addButton = binding.btnContactAddList
+            addButton.setOnClickListener {
+                val fragmentTransaction = parentFragmentManager.beginTransaction()
+                val dialogFragment = AddContactDialogFragment()
+                dialogFragment.show(fragmentTransaction, "AddcontactDialogFragment")
             }
-        })
-        val addButton = binding.btnContactAddList
-        addButton.setOnClickListener {
-            val fragmentTransaction = parentFragmentManager.beginTransaction()
-            val dialogFragment = AddContactDialogFragment()
-            dialogFragment.show(fragmentTransaction, "AddcontactDialogFragment")
         }
     }
-}
