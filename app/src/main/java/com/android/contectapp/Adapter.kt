@@ -1,6 +1,7 @@
 package com.android.contectapp
 
 
+import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import com.android.contectapp.databinding.ActivityGirdviewItemListBinding
 import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 import java.lang.RuntimeException
 
-class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
+
+class Adapter(val Item: List<Item>, private var isGridMode: Boolean) :
+
     RecyclerView.Adapter<Adapter.Holder>() {
 
     interface OnItemClickListener {
@@ -50,7 +53,7 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
         holder.name.text = pos.name
         holder.specialist.text = pos.specialist
         holder.image.setImageResource(pos.image)
-
+        Log.d(log,"${pos.name} $position")
         holder.itemView.setOnClickListener {
 
             val position = holder.bindingAdapterPosition
@@ -61,11 +64,11 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     }
 
     override fun getItemCount(): Int {
-        return item.size
+        return Item.size
     }
 
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return Item[position].name.hashCode().toLong()
     }
 
     inner class Holder(val binding: ActivityRecyclerviewItemListBinding) :

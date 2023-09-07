@@ -4,21 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".Recyclerview_item_list">
+    tools:context=".Recyclerview_item_list"
+    android:paddingBottom="20dp"
+    >
 
-    <TextView
-        android:id="@+id/recyclerview_collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="A"
-        android:textStyle="bold"
-        android:textColor="#BCB0B0"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/recyclerview_iv_profile"
@@ -29,21 +18,22 @@
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/detail_iv_1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.136"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview_collection" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/recyclerview_iv_fave_fill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:src="@drawable/contact_iv_fave_fill"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/recyclerview_iv_profile"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerview_collection" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/recyclerview_speciallist"

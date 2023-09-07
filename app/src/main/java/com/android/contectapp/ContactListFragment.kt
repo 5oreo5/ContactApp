@@ -1,6 +1,7 @@
 package com.android.contectapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +18,16 @@ import com.android.contectapp.databinding.FragmentContactListBinding
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
-    private lateinit var binding: FragmentContactListBinding
-    private lateinit var rv: RecyclerView
-    private lateinit var adapter: Adapter
-    private var items = NewListRepository.getNewList()
+
+    private lateinit var binding : FragmentContactListBinding
+    private lateinit var rv : RecyclerView
+    private lateinit var adapter : Adapter
+    private val items = NewListRepository.getNewList().also {
+        Log.d(log, "${it.size}뉴리포지터리")
+    }
+
     private var isGridMode = true
+    var log="로그"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,10 +45,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         binding = FragmentContactListBinding.inflate(layoutInflater)
 
 
-        rv = binding.recyclerview
-        adapter = Adapter(items as MutableList<Item>, isGridMode)
-        rv.layoutManager = LinearLayoutManager(requireContext())
-        rv.adapter = adapter
         val spinner = binding.mainSpinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -70,7 +72,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
             rv = binding.recyclerview
             rv.layoutManager = LinearLayoutManager(requireContext())
@@ -110,6 +111,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 val fragmentTransaction = parentFragmentManager.beginTransaction()
                 val dialogFragment = AddContactDialogFragment()
                 dialogFragment.show(fragmentTransaction, "AddcontactDialogFragment")
+
             }
         }
     }
