@@ -9,6 +9,7 @@ import com.android.contectapp.databinding.FragmentMyPageBinding
 
 class MyPageFragment : Fragment() {
 
+
     private lateinit var binding : FragmentMyPageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

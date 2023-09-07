@@ -35,7 +35,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
 
-
         rv = binding.recyclerview
         adapter = Adapter(items as MutableList<Item>, isGridMode)
         rv.layoutManager = LinearLayoutManager(requireContext())

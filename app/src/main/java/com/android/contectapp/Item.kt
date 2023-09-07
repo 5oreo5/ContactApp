@@ -18,9 +18,13 @@ data class Item(
     
 
 object NewListRepository {
-  
+    val dataList = mutableListOf<Item>()
+
+    fun addItem(newItem: Item) {
+        dataList.add(newItem)
+    }
     fun getNewList(): MutableList<Item> {
-        val dataList = mutableListOf<Item>()
+
         dataList.add(
             Item(
                 R.drawable.detail_iv_1,
@@ -165,5 +169,9 @@ object NewListRepository {
             )
         )
         return dataList
+
+
+
     }
+
 }

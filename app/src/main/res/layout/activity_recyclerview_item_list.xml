@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
     tools:context=".Recyclerview_item_list">
 
     <ImageView
+
         android:id="@+id/recyclerview_iv_profile"
         android:layout_width="70dp"
         android:layout_height="90dp"
@@ -15,8 +17,9 @@
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/detail_iv_1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_fave_fill"
-        tools:layout_editor_absoluteY="44dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/recyclerview_iv_fave_fill"
