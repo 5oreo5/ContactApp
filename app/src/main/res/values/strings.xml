@@ -2,4 +2,8 @@
     <string name="app_name">ContectApp</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="spinner_items">
+        <item>grid Type</item>
+        <item>list Type</item>
+    </string-array>
 </resources>

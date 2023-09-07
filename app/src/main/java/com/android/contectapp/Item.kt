@@ -1,5 +1,10 @@
 package com.android.contectapp
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parceler
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Item(
     val image: Int,
     val name: String,
@@ -9,8 +14,9 @@ data class Item(
     val email: String,
     val event: String,
     val status: String,
-    var checkbox:Boolean=false
-)
+    var isfavorite: Boolean
+) : Parcelable
+    
 
 object NewListRepository {
   
@@ -25,7 +31,8 @@ object NewListRepository {
                 "간담췌외과",
                 "aaaa@yulje.com",
                 "5분 뒤",
-                "매주 목요일 9시 ~ 11시 세미나로 인해 통화 어렵습니다."
+                "매주 목요일 9시 ~ 11시 세미나로 인해 통화 어렵습니다.",
+                false
             )
         )
         dataList.add(
@@ -37,7 +44,8 @@ object NewListRepository {
                 "소아외과",
                 "bbbb@yulje.com",
                 "10분 뒤",
-                "언제든 통화 가능합니다 ^^"
+                "언제든 통화 가능합니다 ^^",
+                false
             )
         )
         dataList.add(
@@ -49,7 +57,8 @@ object NewListRepository {
                 "흉부외과",
                 "cccc@yulje.com",
                 "5분 뒤",
-                "긴급 콜 아님 전화 하지 마세요."
+                "긴급 콜 아님 전화 하지 마세요.",
+                false
             )
         )
         dataList.add(
@@ -61,7 +70,8 @@ object NewListRepository {
                 "산부인과",
                 "dddd@yulje.com",
                 "5분 뒤",
-                "21시 이후 통화 불가합니다~"
+                "21시 이후 통화 불가합니다~",
+                false
             )
         )
         dataList.add(
@@ -73,7 +83,8 @@ object NewListRepository {
                 "신경외과",
                 "eeee@yulje.com",
                 "30분 뒤",
-                "월, 수, 금 본원 / 화, 목 분원"
+                "월, 수, 금 본원 / 화, 목 분원",
+                false
             )
         )
         dataList.add(
@@ -85,7 +96,8 @@ object NewListRepository {
                 "간담췌외과",
                 "ffff@yulje.com",
                 "10분 뒤",
-                "전화 가능"
+                "전화 가능",
+                false
             )
         )
         dataList.add(
@@ -97,7 +109,8 @@ object NewListRepository {
                 "흉부외과",
                 "gggg@yulje.com",
                 "5분 뒤",
-                "언제든 전화 주세요"
+                "언제든 전화 주세요",
+                false
             )
         )
         dataList.add(
@@ -109,7 +122,8 @@ object NewListRepository {
                 "산부인과",
                 "hhhh@yulje.com",
                 "10분 뒤",
-                "전화 주세요!"
+                "전화 주세요!",
+                false
             )
         )
         dataList.add(
@@ -121,7 +135,8 @@ object NewListRepository {
                 "흉부외과",
                 "iiii@yulje.com",
                 "30분 뒤",
-                "전화 불가"
+                "전화 불가",
+                false
             )
         )
         dataList.add(
@@ -133,7 +148,8 @@ object NewListRepository {
                 "율제재단 이사장",
                 "jjjj@yulje.com",
                 "OFF",
-                "내선 777"
+                "내선 777",
+                false
             )
         )
         dataList.add(
@@ -145,7 +161,8 @@ object NewListRepository {
                 "율제병원장",
                 "aaaa@yulje.com",
                 "OFF",
-                "내선 805"
+                "내선 805",
+                false
             )
         )
         return dataList

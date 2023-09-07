@@ -5,18 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.recyclerview.widget.GridLayoutManager
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.FragmentContactListBinding
 
+
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
+    private lateinit var binding : FragmentContactListBinding
+    private lateinit var rv : RecyclerView
+    private lateinit var adapter : Adapter
     private lateinit var binding: FragmentContactListBinding
     private lateinit var rv: RecyclerView
     private lateinit var adapter: Adapter
     private var items = NewListRepository.getNewList()
+    private var isGridMode = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,14 +37,43 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
+
+
+        rv = binding.recyclerview
+        adapter = Adapter(items as MutableList<Item>, isGridMode)
+        rv.layoutManager = LinearLayoutManager(requireContext())
+        rv.adapter = adapter
+        val spinner = binding.mainSpinner
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val selectedMode = p0?.getSelectedItemPosition().toString()
+                isGridMode = selectedMode == "Grid Mode"
+                adapter.setGridMode(isGridMode)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
         return binding.root
     }
+    private fun updateRecyclerViewMode() {
+        adapter = Adapter(items as MutableList<Item>, isGridMode)
+        rv.layoutManager = if (isGridMode) {
+            GridLayoutManager(requireContext(), 2)
+        } else {
+            LinearLayoutManager(requireContext())
+        }
+        rv.adapter = adapter
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         rv = binding.recyclerview
         rv.layoutManager = LinearLayoutManager(requireContext())
+        adapter = Adapter(items as MutableList<Item>, isGridMode)
+
 
         adapter = Adapter(items as MutableList<Item>)
         rv.adapter = adapter
@@ -69,7 +105,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 detailContactFragment.show(parentFragmentManager, "DetailContactFragment")
             }
         })
-
         val addButton = binding.btnContactAddList
         addButton.setOnClickListener {
             val fragmentTransaction = parentFragmentManager.beginTransaction()
