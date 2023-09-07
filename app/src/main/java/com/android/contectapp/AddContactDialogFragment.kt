@@ -1,7 +1,5 @@
 package com.android.contectapp
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Point
@@ -13,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -29,7 +26,7 @@ class AddContactDialogFragment : DialogFragment() {
     private val notificationHelper: NotificationHelper by lazy {
         NotificationHelper(requireContext())
     }
-
+    
     override fun onResume() {
         super.onResume()
         //다이얼로그 size
@@ -44,26 +41,21 @@ class AddContactDialogFragment : DialogFragment() {
         params?.width = (deviceWidth * 0.9).toInt()
         params?.height = (deviceHeight * 0.8).toInt()
         dialog?.window?.attributes = params as WindowManager.LayoutParams
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddContactDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        notificationHelper
 
         binding.addNickName.addTextChangedListener(useTextWatcher(binding.addNickName))
 
@@ -84,14 +76,8 @@ class AddContactDialogFragment : DialogFragment() {
                 "새로운 이벤트",
                 "새로운 상태",
                 false
-
             )
             NewListRepository.addItem(newItem)
-
-
-
-
-
 
             if (name.isEmpty()) {
                 Toast.makeText(requireContext(), "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
@@ -118,8 +104,6 @@ class AddContactDialogFragment : DialogFragment() {
                 dismiss()
 
             }
-
-
 
         }
         binding.addCancelBtn.setOnClickListener() {
@@ -149,9 +133,7 @@ class AddContactDialogFragment : DialogFragment() {
             scheduleSingleAlarmAndNotification(title, message, delayMinutes, uniqueNotificationId)
             Toast.makeText(requireContext(), "20분 뒤 알림이 울립니다.", Toast.LENGTH_SHORT).show()
         }
-        return binding.root
     }
-
     private fun useTextWatcher(editText: EditText): TextWatcher {
         return object : TextWatcher {
             val maxLength = 15
@@ -202,7 +184,5 @@ class AddContactDialogFragment : DialogFragment() {
             triggerTime,
             pendingIntent
         )
-
-
     }
 }

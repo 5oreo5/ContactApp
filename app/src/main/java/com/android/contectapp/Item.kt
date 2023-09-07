@@ -163,9 +163,22 @@ object NewListRepository {
                 "주전자",
                 "010-1111-1121",
                 "율제병원장",
-                "aaaa@yulje.com",
+                "kkkk@yulje.com",
                 "OFF",
                 "내선 805",
+                false
+            )
+        )
+        dataList.add(
+            Item(
+                R.drawable.detail_iv_12,
+                "용석민",
+                "드래곤스톤",
+                "010-1111-1122",
+                "신경외과",
+                "llll@yulje.com",
+                "OFF",
+                "출장 중 입니다.",
                 false
             )
         )
@@ -173,12 +186,5 @@ object NewListRepository {
         return dataList.sortedBy {it.name }.also {
             Log.d(log, "${it.size}")
         }
-
-
-
-
-
     }
-
-
 }
