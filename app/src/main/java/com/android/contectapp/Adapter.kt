@@ -1,6 +1,7 @@
 package com.android.contectapp
 
 
+import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 
 class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
+
 
     interface OnItemClickListener {
         fun onItemClick(data: Item, position: Int)
@@ -43,7 +45,7 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
             return ItemListHolder(binding)
         }
     }
-
+    
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val pos = item[position]
         if (isGridMode) {
@@ -77,7 +79,7 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
         return item.size
     }
     override fun getItemId(position: Int): Long {
-        return position.toLong()
+        return Item[position].name.hashCode().toLong()
     }
     // 아이템 드래그 시 호출
     override fun onItemMove(from_position: Int, to_position: Int): Boolean {

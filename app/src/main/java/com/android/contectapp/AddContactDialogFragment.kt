@@ -1,8 +1,10 @@
 package com.android.contectapp
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Point
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -11,7 +13,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.setFragmentResult
 import com.android.contectapp.databinding.FragmentAddContactDialogBinding
 import java.util.regex.Pattern
 
@@ -19,10 +23,10 @@ import java.util.regex.Pattern
 class AddContactDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentAddContactDialogBinding
 
-    private val notificationHelper : NotificationHelper by lazy {
+    private val notificationHelper: NotificationHelper by lazy {
         NotificationHelper(requireContext())
     }
-
+    
     override fun onResume() {
         super.onResume()
         //다이얼로그 size
@@ -52,6 +56,7 @@ class AddContactDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         notificationHelper
+
         binding.addNickName.addTextChangedListener(useTextWatcher(binding.addNickName))
 
         binding.addSaveBtn.setOnClickListener() {
@@ -60,9 +65,22 @@ class AddContactDialogFragment : DialogFragment() {
             val mobile = binding.addMobileEdit.text.toString()
             val special = binding.addSpecialEdit.text.toString()
             val mail = binding.addMailEdit.text.toString()
+            val nickname = binding.addCancelBtn.text.toString()
+            val newItem = Item(
+                0,
+                name,
+                nickname,
+                mobile,
+                special,
+                mail,
+                "새로운 이벤트",
+                "새로운 상태",
+                false
+            )
+            NewListRepository.addItem(newItem)
 
             if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "아이디를 입력해주세요!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else if (mobile.isEmpty()) {
                 Toast.makeText(requireContext(), "번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else if (special.isEmpty()) {
@@ -73,12 +91,20 @@ class AddContactDialogFragment : DialogFragment() {
                 Toast.makeText(requireContext(), "이메일 형식이 아닙니다", Toast.LENGTH_SHORT).show()
             } else if (!Pattern.matches("^010-\\d{4}-\\d{4}\$", mobile)) {
                 Toast.makeText(requireContext(), "올바른 핸드폰 번호가 아닙니다.", Toast.LENGTH_SHORT).show()
-            } else if (!Pattern.matches("^[가-힣]|[a-z]|[A-Z]*\$", special)) {
-                Toast.makeText(requireContext(), "문자만 입력해 주세요", Toast.LENGTH_SHORT).show()
+            } else if (!Pattern.matches("^[A-Za-z가-힣]+$", special)) {
+                Toast.makeText(requireContext(), "한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show()
 
+                val bundle = Bundle()
+                bundle.putString("k_name",name)
+                arguments?.let {
+                    setFragmentResult("r_name",bundle) }
+
+                dismiss()
+
             }
+
         }
         binding.addCancelBtn.setOnClickListener() {
             dismiss()
@@ -91,17 +117,21 @@ class AddContactDialogFragment : DialogFragment() {
         }
 
         binding.addNoti10Btn.setOnClickListener {
-            // 10분 뒤 알림 설정
-            val delayMillis = 10 * 60 * 1000L
-            val message = "10분 후 알림이 울립니다."
-            scheduleNotification(delayMillis, message)
+            val delayMinutes = 10
+            val title = "OREO"
+            val message = "지금 연락하세요!"
+            val uniqueNotificationId = generateUniqueNotificationId() // 고유한 알림 ID 생성
+            scheduleSingleAlarmAndNotification(title, message, delayMinutes, uniqueNotificationId)
+            Toast.makeText(requireContext(), "10분 뒤 알림이 울립니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.addNoti20Btn.setOnClickListener {
-            // 20분 뒤 알림 설정
-            val delayMillis = 20 * 60 * 1000L
-            val message = "20분 후 알림이 울립니다."
-            scheduleNotification(delayMillis, message)
+            val delayMinutes = 20
+            val title = "OREO"
+            val message = "지금 연락하세요!"
+            val uniqueNotificationId = generateUniqueNotificationId() // 고유한 알림 ID 생성
+            scheduleSingleAlarmAndNotification(title, message, delayMinutes, uniqueNotificationId)
+            Toast.makeText(requireContext(), "20분 뒤 알림이 울립니다.", Toast.LENGTH_SHORT).show()
         }
     }
     private fun useTextWatcher(editText: EditText): TextWatcher {
@@ -119,9 +149,40 @@ class AddContactDialogFragment : DialogFragment() {
             override fun afterTextChanged(s: Editable?) {}
         }
     }
-    private fun scheduleNotification(delayMillis: Long, message: String) {
-        // 지연 후 알림 생성 및 표시
-        val notificationBuilder = notificationHelper.createNotification("알림", message)
-        notificationHelper.showNotification(1, notificationBuilder)
+
+    private fun generateUniqueNotificationId(): Int {
+        // 현재 시간을 기반으로 고유한 알림 ID 생성
+        return System.currentTimeMillis().toInt()
+    }
+
+    private fun scheduleSingleAlarmAndNotification(
+        title: String,
+        content: String,
+        delayMinutes: Int,
+        notificationId: Int
+    ) {
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(requireContext(), AlertReceiver::class.java)
+        intent.action = "SCHEDULED_NOTIFICATION" // "SCHEDULED_NOTIFICATION" 액션 추가
+
+        intent.putExtra("title", title)
+        intent.putExtra("content", content)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            notificationId,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        // 시간을 초 단위로 계산
+        val triggerTime = SystemClock.elapsedRealtime() + delayMinutes * 60 * 1000
+
+        alarmManager.set(
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
+            triggerTime,
+            pendingIntent
+        )
     }
 }

@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.mainViewPager.adapter = MainAdapter(this)
         tabLayout = binding.mainTabLayout
-
+      
         // READ_CONTACTS 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(
                 this,
