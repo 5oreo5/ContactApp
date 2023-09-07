@@ -1,6 +1,7 @@
 package com.android.contectapp
 
 import android.os.Parcelable
+import android.util.Log
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -18,12 +19,12 @@ data class Item(
     
 
 object NewListRepository {
-    val dataList = mutableListOf<Item>()
+   private val dataList = mutableListOf<Item>()
 
-    fun addItem(newItem: Item) {
-        dataList.add(newItem)
+   fun addItem(newItem: Item) {
+      //  dataList.add(newItem)
     }
-    fun getNewList(): MutableList<Item> {
+    fun getNewList(): List<Item> {
 
         dataList.add(
             Item(
@@ -168,10 +169,16 @@ object NewListRepository {
                 false
             )
         )
-        return dataList
+        val log="로그"
+        return dataList.sortedBy {it.name }.also {
+            Log.d(log, "${it.size}")
+        }
+
+
 
 
 
     }
+
 
 }

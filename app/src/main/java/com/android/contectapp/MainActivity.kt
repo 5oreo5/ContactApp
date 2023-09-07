@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var tabLayout: TabLayout
     private val tabTextList = listOf("contacts", "my_page")
     private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
-    private lateinit var contactListFragment: ContactListFragment
-    private lateinit var detailContactFragment: DetailContactFragment
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -45,8 +43,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.mainViewPager.adapter = MainAdapter(this)
         tabLayout = binding.mainTabLayout
-        contactListFragment = ContactListFragment()
-        detailContactFragment = DetailContactFragment()
         // READ_CONTACTS 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(
                 this,

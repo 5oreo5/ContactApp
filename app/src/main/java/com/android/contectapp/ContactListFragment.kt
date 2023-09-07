@@ -1,6 +1,7 @@
 package com.android.contectapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +20,11 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     private lateinit var binding : FragmentContactListBinding
     private lateinit var rv : RecyclerView
     private lateinit var adapter : Adapter
-    private var items = NewListRepository.getNewList()
+    private val items = NewListRepository.getNewList().also {
+        Log.d(log, "${it.size}뉴리포지터리")
+    }
     private var isGridMode = true
+    var log="로그"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +39,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
 
-        rv = binding.recyclerview
-        adapter = Adapter(items as MutableList<Item>, isGridMode)
-        rv.layoutManager = LinearLayoutManager(requireContext())
-        rv.adapter = adapter
+
         val spinner = binding.mainSpinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -68,13 +69,16 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
         rv = binding.recyclerview
         rv.layoutManager = LinearLayoutManager(requireContext())
-        adapter = Adapter(items, isGridMode)
+        Log.d(log,"${items.size}")
+        adapter = Adapter(items.toList(), isGridMode)
 
         rv.adapter = adapter
 
         adapter.setOnItemClickListener(object : Adapter.OnItemClickListener {
 
+
             override fun onItemClick(data: Item, position: Int) {
+
                 val image = data.image
                 val name = data.name
                 val nickname = data.nickname
