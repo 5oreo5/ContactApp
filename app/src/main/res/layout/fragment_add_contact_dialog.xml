@@ -200,17 +200,17 @@
                 android:src="@drawable/addcontacts_iv_alarm" />
 
 
-            <Button
+            <CheckBox
                 android:id="@+id/add_noti_10Btn"
                 android:layout_marginStart="10dp"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="10분뒤 알림"/>
 
-            <Button
+            <CheckBox
                 android:layout_marginStart="10dp"
                 android:id="@+id/add_noti_20Btn"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:text="20분뒤 알림"/>
         </LinearLayout>
@@ -223,9 +223,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
 
-            <Button
+            <CheckBox
                 android:id="@+id/add_noti_offBtn"
-                android:layout_width="60dp"
+                android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="70dp"
                 android:text="OFF" />
