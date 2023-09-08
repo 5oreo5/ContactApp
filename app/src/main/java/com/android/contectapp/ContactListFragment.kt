@@ -37,6 +37,10 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         items.sortBy {it.name}
         return binding.root
     }
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
