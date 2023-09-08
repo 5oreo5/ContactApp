@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.Settings
+import android.util.Log
 import android.view.ContextMenu
 import android.view.View
 import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityMainBinding
@@ -23,10 +23,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private lateinit var tabLayout: TabLayout
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater)}
+    lateinit var tabLayout: TabLayout
+    private val mainAdapter = MainAdapter(this)
     private val tabTextList = listOf("contacts", "my_page")
-    private val tabIconList = listOf(R.drawable.tab_iv_contacts, R.drawable.tab_iv_mypage)
+    private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.mainViewPager.adapter = MainAdapter(this)
+        binding.mainViewPager.adapter = mainAdapter
         tabLayout = binding.mainTabLayout
 
         // READ_CONTACTS 권한 확인 및 요청
@@ -57,15 +58,12 @@ class MainActivity : AppCompatActivity() {
             // READ_CONTACTS 권한을 요청
             requestPermissionLauncher.launch(android.Manifest.permission.READ_CONTACTS)
         }
-        TabLayoutMediator(binding.mainTabLayout, binding.mainViewPager) { tab, position ->
+        TabLayoutMediator(binding.mainTabLayout,binding.mainViewPager) { tab, position ->
             tab.text = tabTextList[position]
             tab.setIcon(tabIconList[position])
         }.attach()
     }
-
     private fun loadContacts() {
-
-        val contactList = mutableListOf<Contact>()
         // 연락처 데이터를 불러오는 작업을 수행
         lifecycleScope.launch(Dispatchers.IO) {
             val cursor = contentResolver.query(
@@ -76,46 +74,44 @@ class MainActivity : AppCompatActivity() {
                 null
             )
 
+
             cursor?.use { cursor ->
                 while (cursor.moveToNext()) {
                     val contactName =
                         cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME))
-                    val hasPhoneNumber =
-                        cursor.getInt(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.HAS_PHONE_NUMBER))
+                    val contactId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
 
-                    if (hasPhoneNumber > 0) {
-                        // 연락처에 전화번호가 있는 경우, 전화번호 데이터를 가져올 수 있습니다.
-                        val contactId =
-                            cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
+                    val phoneCursor = contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                        arrayOf(contactId),
+                        null
+                    )
 
-                        val phoneCursor = contentResolver.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            arrayOf(contactId),
-                            null
-                        )
+                    phoneCursor?.use { phoneCursor ->
+                        while (phoneCursor.moveToNext()) {
+                            val phoneNumber =
+                                phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            Log.d("ContactListFragment", "연락처 이름: $contactName, 연락처 번호: $phoneNumber")
+                            val newItem = Item(
+                                R.drawable.tab_iv_mypage_fill,
+                                contactName,
+                                "",
+                                phoneNumber,
+                                "",
+                                "",
+                                "",
+                                "연락 가능 시간대 : 9시 ~ 23시"
+                            )
+                            NewListRepository.addAndSort(newItem)
 
-                        phoneCursor?.use { phoneCursor ->
-                            while (phoneCursor.moveToNext()) {
-                                val phoneNumber =
-                                    phoneCursor.getString(
-                                        phoneCursor.getColumnIndexOrThrow(
-                                            ContactsContract.CommonDataKinds.Phone.NUMBER
-                                        )
-                                    )
-                                // 가져온 연락처 데이터를 사용하거나 리스트에 추가
-                                val contact = Contact(contactName, phoneNumber)
-                                contactList.add(contact)
-                            }
                         }
-
-                        phoneCursor?.close()
                     }
+                    phoneCursor?.close()
                 }
             }
-            // 연락처 데이터를 가져온 후에 contactList를 사용하여 원하는 작업을 수행할 수 있습니다.
-            // 예를 들어, RecyclerView에 연락처 데이터를 표시하거나 다른 작업을 수행할 수 있습니다.
+            cursor?.close()
         }
     }
 
@@ -135,4 +131,5 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
+
 }

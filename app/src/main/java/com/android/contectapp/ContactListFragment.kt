@@ -1,8 +1,14 @@
 package com.android.contectapp
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -10,33 +16,46 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.FragmentContactListBinding
+import android.content.ContentResolver
 
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
+
     private lateinit var binding: FragmentContactListBinding
     private lateinit var rv: RecyclerView
     private lateinit var adapter: Adapter
+    private lateinit var requestLauncher: ActivityResultLauncher<Intent>
     private var items = NewListRepository.getNewList()
     private var isGridMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
-        items.sortBy {it.name}
+        items.sortBy { it.name }
         return binding.root
+
+
     }
+
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
@@ -55,7 +74,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
             override fun onItemClick(data: Item, position: Int) {
 
-                val bundle = Bundle().apply{
+                val bundle = Bundle().apply {
                     putInt("image", data.image)
                     putString("name", data.name)
                     putString("nickname", data.nickname)
@@ -95,6 +114,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 adapter.setGridMode(isGridMode)
                 rv.adapter = adapter // 계속 같은 holder를 쓰는걸 다시 만들어준다.
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         // 리스너를 구현한 Adapter 클래스를 Callback 클래스의 생성자로 지정
@@ -103,4 +123,14 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         // RecyclerView에 ItemTouchHelper 연결
         helper.attachToRecyclerView(rv)
     }
+
+
+
+
+
+
+
+
+
+
 }
