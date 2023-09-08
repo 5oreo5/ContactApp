@@ -70,7 +70,6 @@ class AddContactDialogFragment : DialogFragment() {
             val nickname = binding.addNickName.text.toString()
             val event10 = binding.addNoti10Btn.isChecked
             val event20 = binding.addNoti20Btn.isChecked
-            val eventOff = binding.addNotiOffBtn.isChecked
             var eventText = ""
 
             eventText = if (event10) {
@@ -80,18 +79,17 @@ class AddContactDialogFragment : DialogFragment() {
             } else {
                 "OFF"
             }
-
             val newItem = Item(
-                0,
+                R.drawable.tab_iv_mypage_fill,
                 name,
                 nickname,
                 mobile,
                 special,
                 mail,
                 eventText,
-                "새로운 상태"
+                "연락 가능 시간대 : 9시 ~ 23시"
             )
-            NewListRepository.getNewList().add(newItem)
+            NewListRepository.addAndSort(newItem)
 
             if (name.isEmpty()) {
                 Toast.makeText(requireContext(), "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
@@ -101,25 +99,29 @@ class AddContactDialogFragment : DialogFragment() {
                 Toast.makeText(requireContext(), "담당을 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else if (mail.isEmpty()) {
                 Toast.makeText(requireContext(), "이메일을 입력해주세요!", Toast.LENGTH_SHORT).show()
+            } else if (nickname.isEmpty()) {
+                Toast.makeText(requireContext(), "별명을 입력해주세요!", Toast.LENGTH_SHORT).show()
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
                 Toast.makeText(requireContext(), "이메일 형식이 아닙니다", Toast.LENGTH_SHORT).show()
-            } else if (!Pattern.matches("^010-\\d{4}-\\d{4}\$", mobile)) {
-                Toast.makeText(requireContext(), "올바른 핸드폰 번호가 아닙니다.", Toast.LENGTH_SHORT).show()
-            } else if (!Pattern.matches("^[A-Za-z가-힣]+$", special)) {
-                Toast.makeText(requireContext(), "한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT).show()
+            } else if (!Pattern.matches("^010-\\d{3,4}-\\d{4}\$", mobile)) {
+                Toast.makeText(requireContext(), "올바른 핸드폰 번ㅇ호가 아닙니다.", Toast.LENGTH_SHORT).show()
+            } else if (!Pattern.matches("^[a-zA-Z0-9ㄱ-ㅣ가-힣]*$", special)) {
+                Toast.makeText(requireContext(), "Specialist - 한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT)
+                    .show()
             } else {
-                Toast.makeText(requireContext(), "회원가입 완료!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "연락처 추가 완료", Toast.LENGTH_SHORT).show()
 
-                val bundle = Bundle()
-                bundle.putString("k_name",name)
-                arguments?.let {
-                    setFragmentResult("r_name",bundle) }
-
-                dismiss()
-
+                if(name.isNotEmpty() && mobile.isNotEmpty() && special.isNotEmpty() && mail.isNotEmpty() && nickname.isNotEmpty()) {
+                    val bundle = Bundle()
+                    bundle.putString("k_name", name)
+                    arguments?.let {
+                        setFragmentResult("r_name", bundle)
+                    }
+                    dismiss()
+                }
             }
-
         }
+
         binding.addCancelBtn.setOnClickListener() {
             dismiss()
         }
@@ -127,7 +129,7 @@ class AddContactDialogFragment : DialogFragment() {
         binding.addNotiOffBtn.setOnClickListener {
             // 알림 취소
             notificationHelper.cancelNotification(1)
-            Toast.makeText(requireContext(), "알림을 삭제합니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "알림 OFF", Toast.LENGTH_SHORT).show()
         }
 
         binding.addNoti10Btn.setOnClickListener {

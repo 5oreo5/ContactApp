@@ -1,10 +1,8 @@
 package com.android.contectapp
 
 
-import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.ActivityGirdviewItemListBinding
@@ -82,14 +80,14 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
         return item[position].name.hashCode().toLong()
     }
     // 아이템 드래그 시 호출
-    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
-        val name = item[from_position]
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        val name = item[fromPosition]
         // 리스트 갱신
-        item.removeAt(from_position)
-        item.add(to_position, name)
+        item.removeAt(fromPosition)
+        item.add(toPosition, name)
 
         // fromPosition에서 toPosition으로 아이템 이동 공지
-        notifyItemMoved(from_position, to_position)
+        notifyItemMoved(fromPosition, toPosition)
         return true
     }
 

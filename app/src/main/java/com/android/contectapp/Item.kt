@@ -20,6 +20,11 @@ data class Item(
 object NewListRepository {
    private val dataList = mutableListOf<Item>()
 
+    fun addAndSort(newItem: Item) {
+        dataList.add(newItem)
+        dataList.sortBy { it.name }
+    }
+
     fun getNewList(): MutableList<Item> {
 
         dataList.add(

@@ -11,28 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--왼쪽 우측 아이콘-->
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/personIcon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/addcontacts_iv_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </LinearLayout>
-
         <!--원형뷰 레이아웃/-->
 
         <ImageView
@@ -203,14 +181,14 @@
             <CheckBox
                 android:id="@+id/add_noti_10Btn"
                 android:layout_marginStart="10dp"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="10분뒤 알림"/>
 
             <CheckBox
                 android:layout_marginStart="10dp"
                 android:id="@+id/add_noti_20Btn"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:text="20분뒤 알림"/>
         </LinearLayout>
@@ -225,16 +203,12 @@
 
             <CheckBox
                 android:id="@+id/add_noti_offBtn"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="70dp"
                 android:text="OFF" />
 
         </LinearLayout>
-
-
-
-
 
         <!--save/cancel btn-->
         <LinearLayout

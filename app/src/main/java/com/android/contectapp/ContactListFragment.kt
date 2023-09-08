@@ -50,37 +50,31 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         adapter.setOnItemClickListener(object : Adapter.OnItemClickListener {
 
             override fun onItemClick(data: Item, position: Int) {
-                val image = data.image
-                val name = data.name
-                val nickname = data.nickname
-                val phone = data.phone
-                val specialist = data.specialist
-                val email = data.email
-                val event = data.event
-                val status = data.status
 
-                val detailContactFragment = DetailContactFragment()
-                val bundle = Bundle()
-                bundle.putInt("image", image)
-                bundle.putString("name", name)
-                bundle.putString("nickname", nickname)
-                bundle.putString("phone", phone)
-                bundle.putString("specialist", specialist)
-                bundle.putString("email", email)
-                bundle.putString("event", event)
-                bundle.putString("status", status)
-                detailContactFragment.arguments = bundle
-
+                val bundle = Bundle().apply{
+                    putInt("image", data.image)
+                    putString("name", data.name)
+                    putString("nickname", data.nickname)
+                    putString("phone", data.phone)
+                    putString("specialist", data.specialist)
+                    putString("email", data.email)
+                    putString("event", data.event)
+                    putString("status", data.status)
+                }
+                val detailContactFragment = DetailContactFragment().apply {
+                    arguments = bundle
+                }
                 detailContactFragment.show(parentFragmentManager, "DetailContactFragment")
             }
         })
+
         val addButton = binding.btnContactAddList
         addButton.setOnClickListener {
             val fragmentTransaction = parentFragmentManager.beginTransaction()
             val dialogFragment = AddContactDialogFragment()
             dialogFragment.show(fragmentTransaction, "AddcontactDialogFragment")
-
         }
+
         val spinner = binding.mainSpinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -97,17 +91,12 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
                 adapter.setGridMode(isGridMode)
                 rv.adapter = adapter // 계속 같은 holder를 쓰는걸 다시 만들어준다.
             }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
-
         // 리스너를 구현한 Adapter 클래스를 Callback 클래스의 생성자로 지정
         val itemTouchHelperCallback = CallHelper(requireContext(), adapter)
-        // ItemTouchHelper의 생성자로 ItemTouchHelper.Callback 객체 셋팅
         val helper = ItemTouchHelper(itemTouchHelperCallback)
         // RecyclerView에 ItemTouchHelper 연결
         helper.attachToRecyclerView(rv)
-
     }
 }
