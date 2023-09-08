@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CallHelper(private val con: Context, private val rv : Adapter): ItemTouchHelper.Callback() {
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder
-    ): Int { return makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) }
+    ): Int { return makeMovementFlags(0, ItemTouchHelper.RIGHT) }
 
     override fun onMove(recycleXrView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder
     ): Boolean { return false }

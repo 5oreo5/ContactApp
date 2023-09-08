@@ -1,6 +1,7 @@
 package com.android.contectapp
 
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import com.android.contectapp.databinding.ActivityRecyclerviewItemListBinding
 class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), ItemTouchHelperListener {
 
-
     interface OnItemClickListener {
         fun onItemClick(data: Item, position: Int)
     }
@@ -19,6 +19,7 @@ class Adapter(val item: MutableList<Item>, private var isGridMode: Boolean) :
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun setGridMode(isGridMode: Boolean) {
         Log.d("정보" , "setGridMode: isGridMode=$isGridMode")
         this.isGridMode = isGridMode
