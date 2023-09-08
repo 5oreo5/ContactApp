@@ -14,16 +14,12 @@ data class Item(
     val email: String,
     val event: String,
     val status: String,
-    var isfavorite: Boolean
 ) : Parcelable
 
 
 object NewListRepository {
    private val dataList = mutableListOf<Item>()
 
-   fun addItem(newItem: Item) {
-      //  dataList.add(newItem)
-    }
     fun getNewList(): MutableList<Item> {
 
         dataList.add(
@@ -36,7 +32,6 @@ object NewListRepository {
                 "aaaa@yulje.com",
                 "5분 뒤",
                 "매주 목요일 9시 ~ 11시 세미나로 인해 통화 어렵습니다.",
-                false
             )
         )
         dataList.add(
@@ -49,7 +44,6 @@ object NewListRepository {
                 "bbbb@yulje.com",
                 "10분 뒤",
                 "언제든 통화 가능합니다 ^^",
-                false
             )
         )
         dataList.add(
@@ -62,7 +56,6 @@ object NewListRepository {
                 "cccc@yulje.com",
                 "5분 뒤",
                 "긴급 콜 아님 전화 하지 마세요.",
-                false
             )
         )
         dataList.add(
@@ -75,7 +68,6 @@ object NewListRepository {
                 "dddd@yulje.com",
                 "5분 뒤",
                 "21시 이후 통화 불가합니다~",
-                false
             )
         )
         dataList.add(
@@ -88,7 +80,6 @@ object NewListRepository {
                 "eeee@yulje.com",
                 "30분 뒤",
                 "월, 수, 금 본원 / 화, 목 분원",
-                false
             )
         )
         dataList.add(
@@ -101,7 +92,6 @@ object NewListRepository {
                 "ffff@yulje.com",
                 "10분 뒤",
                 "전화 가능",
-                false
             )
         )
         dataList.add(
@@ -114,7 +104,6 @@ object NewListRepository {
                 "gggg@yulje.com",
                 "5분 뒤",
                 "언제든 전화 주세요",
-                false
             )
         )
         dataList.add(
@@ -127,7 +116,6 @@ object NewListRepository {
                 "hhhh@yulje.com",
                 "10분 뒤",
                 "전화 주세요!",
-                false
             )
         )
         dataList.add(
@@ -140,7 +128,6 @@ object NewListRepository {
                 "iiii@yulje.com",
                 "30분 뒤",
                 "전화 불가",
-                false
             )
         )
         dataList.add(
@@ -153,7 +140,6 @@ object NewListRepository {
                 "jjjj@yulje.com",
                 "OFF",
                 "내선 777",
-                false
             )
         )
         dataList.add(
@@ -166,7 +152,6 @@ object NewListRepository {
                 "kkkk@yulje.com",
                 "OFF",
                 "내선 805",
-                false
             )
         )
         dataList.add(
@@ -179,10 +164,8 @@ object NewListRepository {
                 "llll@yulje.com",
                 "OFF",
                 "출장 중 입니다.",
-                false
             )
         )
-        dataList.sortBy { it.name }
         return dataList
     }
 }

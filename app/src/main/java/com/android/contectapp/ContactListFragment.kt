@@ -34,6 +34,7 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentContactListBinding.inflate(layoutInflater)
+        items.sortBy {it.name}
         return binding.root
     }
 

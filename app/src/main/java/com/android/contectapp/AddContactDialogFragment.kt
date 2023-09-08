@@ -67,7 +67,20 @@ class AddContactDialogFragment : DialogFragment() {
             val mobile = binding.addMobileEdit.text.toString()
             val special = binding.addSpecialEdit.text.toString()
             val mail = binding.addMailEdit.text.toString()
-            val nickname = binding.addCancelBtn.text.toString()
+            val nickname = binding.addNickName.text.toString()
+            val event10 = binding.addNoti10Btn.isChecked
+            val event20 = binding.addNoti20Btn.isChecked
+            val eventOff = binding.addNotiOffBtn.isChecked
+            var eventText = ""
+
+            eventText = if (event10) {
+                "10분 뒤"
+            } else if (event20) {
+                "20분 뒤"
+            } else {
+                "OFF"
+            }
+
             val newItem = Item(
                 0,
                 name,
@@ -75,11 +88,10 @@ class AddContactDialogFragment : DialogFragment() {
                 mobile,
                 special,
                 mail,
-                "새로운 이벤트",
-                "새로운 상태",
-                false
+                eventText,
+                "새로운 상태"
             )
-            NewListRepository.addItem(newItem)
+            NewListRepository.getNewList().add(newItem)
 
             if (name.isEmpty()) {
                 Toast.makeText(requireContext(), "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
