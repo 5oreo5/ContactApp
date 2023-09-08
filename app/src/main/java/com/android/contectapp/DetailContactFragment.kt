@@ -1,11 +1,14 @@
 package com.android.contectapp
 
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.provider.ContactsContract.CommonDataKinds
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +44,16 @@ class DetailContactFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val contentResolver: ContentResolver = requireContext().contentResolver
+        val contacts = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null, // 여기에 선택적으로 조건을 추가할 수 있음
+            null, // 여기에 선택적으로 조건을 추가할 수 있음
+            null  // 여기에 선택적으로 정렬 순서를 지정할 수 있음
+        )
+
+
+
     }
 
     override fun onCreateView(

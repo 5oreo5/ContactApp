@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.Settings
+import android.util.Log
 import android.view.ContextMenu
 import android.view.View
 import android.widget.AdapterView
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater)}
     lateinit var tabLayout: TabLayout
+    private val mainAdapter = MainAdapter(this)
     private val tabTextList = listOf("contacts", "my_page")
     private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
     private val requestPermissionLauncher =
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.mainViewPager.adapter = MainAdapter(this)
+        binding.mainViewPager.adapter = mainAdapter
         tabLayout = binding.mainTabLayout
       
         // READ_CONTACTS 권한 확인 및 요청
@@ -72,15 +74,37 @@ class MainActivity : AppCompatActivity() {
                 null
             )
 
+
             cursor?.use { cursor ->
                 while (cursor.moveToNext()) {
                     val contactName =
                         cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME))
-                    // 연락처 이름을 사용하거나 다른 연락처 정보를 처리할 수 있음
+                    val contactId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
+
+                    val phoneCursor = contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                        arrayOf(contactId),
+                        null
+                    )
+
+                    phoneCursor?.use { phoneCursor ->
+                        while (phoneCursor.moveToNext()) {
+                            val phoneNumber =
+                                phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            Log.d("ContactListFragment", "연락처 이름: $contactName, 연락처 번호: $phoneNumber")
+                            (mainAdapter.createFragment(0) as? ContactListFragment)?.addData(contactName,phoneNumber)
+
+                        }
+                    }
+                    phoneCursor?.close()
                 }
             }
+            cursor?.close()
         }
     }
+
     private fun showPermissionDeniedDialog() {
         MaterialAlertDialogBuilder(this)
             .setTitle("권한 필요")
@@ -97,4 +121,5 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
+
 }

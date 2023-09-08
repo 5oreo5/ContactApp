@@ -193,7 +193,7 @@ class AddContactDialogFragment : DialogFragment() {
         )
 
         // 시간을 초 단위로 계산
-        val triggerTime = SystemClock.elapsedRealtime() + delayMinutes * 60 * 1000
+        val triggerTime = SystemClock.elapsedRealtime() + delayMinutes * 1000
 
         alarmManager.set(
             AlarmManager.ELAPSED_REALTIME_WAKEUP,

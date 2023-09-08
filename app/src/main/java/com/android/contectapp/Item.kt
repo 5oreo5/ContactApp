@@ -161,14 +161,14 @@ object NewListRepository {
         )
         dataList.add(
             Item(
-                R.drawable.detail_iv_12,
-                "용석민",
-                "드래곤스톤",
-                "010-1111-1122",
-                "신경외과",
-                "llll@yulje.com",
-                "OFF",
-                "출장 중 입니다.",
+                image = R.drawable.detail_iv_12,
+                name = "용석민",
+                nickname = "드래곤스톤",
+                phone = "010-1111-1122",
+                specialist = "신경외과",
+                email = "llll@yulje.com",
+                event = "OFF",
+                status = "출장 중 입니다.",
             )
         )
         return dataList

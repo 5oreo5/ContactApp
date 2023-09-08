@@ -1,8 +1,14 @@
 package com.android.contectapp
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -10,24 +16,49 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.FragmentContactListBinding
+import android.content.ContentResolver
 
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
+
     private lateinit var binding: FragmentContactListBinding
     private lateinit var rv: RecyclerView
     private lateinit var adapter: Adapter
+    private lateinit var requestLauncher:ActivityResultLauncher<Intent>
     private var items = NewListRepository.getNewList()
     private var isGridMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        binding=FragmentContactListBinding.inflate(layoutInflater)
+        //퍼미션 했는지체크
+        val status= ContextCompat.checkSelfPermission(requireContext(),"android.permission.READ_CONTACTS")
+        if(status==PackageManager.PERMISSION_GRANTED){
+            Log.d("test","permission granted")
+        }else{
+            //안했으면 하라고 창 표시
+            ActivityCompat.requestPermissions(requireActivity(),arrayOf<String>("android.permission.READ_CONTACTS"),100)
+            Log.d("test","permission denied")
+        }
+
+
+
     }
+
+    //다이얼 로그에서 퍼미션 허용 확인
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +67,8 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         binding = FragmentContactListBinding.inflate(layoutInflater)
         items.sortBy {it.name}
         return binding.root
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,5 +131,24 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         val helper = ItemTouchHelper(itemTouchHelperCallback)
         // RecyclerView에 ItemTouchHelper 연결
         helper.attachToRecyclerView(rv)
+    }
+    fun addData(contactName: String, phoneNumber: String) {
+        val newItem = Item(
+            image = 0, // 이미지 리소스 ID를 여기에 추가
+            name = contactName,
+            nickname = "",
+            phone = phoneNumber,
+            specialist = "",
+            email = "",
+            event = "",
+            status = ""
+        )
+
+        // 아이템을 리스트에 추가
+        items.add(newItem)
+        if(::adapter.isInitialized) {
+
+            adapter.notifyDataSetChanged()
+        }
     }
 }
