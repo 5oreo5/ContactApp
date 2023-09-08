@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.mainViewPager.adapter = mainAdapter
         tabLayout = binding.mainTabLayout
-      
+
         // READ_CONTACTS 권한 확인 및 요청
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -94,7 +94,17 @@ class MainActivity : AppCompatActivity() {
                             val phoneNumber =
                                 phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             Log.d("ContactListFragment", "연락처 이름: $contactName, 연락처 번호: $phoneNumber")
-                            (mainAdapter.createFragment(0) as? ContactListFragment)?.addData(contactName,phoneNumber)
+                            val newItem = Item(
+                                R.drawable.tab_iv_mypage_fill,
+                                contactName,
+                                "",
+                                phoneNumber,
+                                "",
+                                "",
+                                "",
+                                "연락 가능 시간대 : 9시 ~ 23시"
+                            )
+                            NewListRepository.addAndSort(newItem)
 
                         }
                     }

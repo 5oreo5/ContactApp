@@ -71,18 +71,18 @@ class DetailContactFragment : DialogFragment() {
             val email = it.getString("email")
             val event = it.getString("event")
             val status = it.getString("status")
-            binding.detailIvImage.setImageResource(image)
-            binding.detailTvName.text = name
-            binding.detailTvNickname.text = nickname
-            binding.detailTvPhone.text = phone
-            binding.detailTvSpecialist.text = specialist
-            binding.detailTvEmail.text = email
-            binding.detailTvEvent.text = event
-            binding.detailTvStatus.text = status
+            binding.apply {
+                detailIvImage.setImageResource(image)
+                detailTvName.text = name
+                detailTvNickname.text = nickname
+                detailTvPhone.text = phone
+                detailTvSpecialist.text = specialist
+                detailTvEmail.text = email
+                detailTvEvent.text = event
+                detailTvStatus.text = status
+            }
         }
-
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

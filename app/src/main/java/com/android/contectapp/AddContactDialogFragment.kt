@@ -1,5 +1,6 @@
 package com.android.contectapp
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -22,7 +23,7 @@ import com.android.contectapp.databinding.FragmentAddContactDialogBinding
 import java.util.regex.Pattern
 
 
-class AddContactDialogFragment : DialogFragment() {
+class AddContactDialogFragment() : DialogFragment() {
     private lateinit var binding: FragmentAddContactDialogBinding
 
     private val notificationHelper: NotificationHelper by lazy {
@@ -55,11 +56,12 @@ class AddContactDialogFragment : DialogFragment() {
         binding = FragmentAddContactDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
+    @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         notificationHelper
 
-        binding.addNickName.addTextChangedListener(useTextWatcher(binding.addNickName))
+        binding.addEditName.addTextChangedListener(useTextWatcher(binding.addEditName))
 
         binding.addSaveBtn.setOnClickListener() {
             // 이름, 번호, 담당 ,메일주소
@@ -79,17 +81,6 @@ class AddContactDialogFragment : DialogFragment() {
             } else {
                 "OFF"
             }
-            val newItem = Item(
-                R.drawable.tab_iv_mypage_fill,
-                name,
-                nickname,
-                mobile,
-                special,
-                mail,
-                eventText,
-                "연락 가능 시간대 : 9시 ~ 23시"
-            )
-            NewListRepository.addAndSort(newItem)
 
             if (name.isEmpty()) {
                 Toast.makeText(requireContext(), "이름을 입력해주세요!", Toast.LENGTH_SHORT).show()
@@ -104,21 +95,32 @@ class AddContactDialogFragment : DialogFragment() {
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
                 Toast.makeText(requireContext(), "이메일 형식이 아닙니다", Toast.LENGTH_SHORT).show()
             } else if (!Pattern.matches("^010-\\d{3,4}-\\d{4}\$", mobile)) {
-                Toast.makeText(requireContext(), "올바른 핸드폰 번ㅇ호가 아닙니다.", Toast.LENGTH_SHORT).show()
-            } else if (!Pattern.matches("^[a-zA-Z0-9ㄱ-ㅣ가-힣]*$", special)) {
+                Toast.makeText(requireContext(), "올바른 핸드폰 번호가 아닙니다.", Toast.LENGTH_SHORT).show()
+            } else if (!Pattern.matches("^[a-zA-Zㄱ-ㅣ가-힣]*$", special)) {
                 Toast.makeText(requireContext(), "Specialist - 한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (!Pattern.matches("^[a-zA-Zㄱ-ㅣ가-힣]*$", name)) {
+                Toast.makeText(requireContext(), "name - 한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (!Pattern.matches("^[a-zA-Zㄱ-ㅣ가-힣]*$", nickname)) {
+                Toast.makeText(requireContext(), "nickname - 한글, 영어 대문자 or 소문자만 입력해주세요", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 Toast.makeText(requireContext(), "연락처 추가 완료", Toast.LENGTH_SHORT).show()
 
-                if(name.isNotEmpty() && mobile.isNotEmpty() && special.isNotEmpty() && mail.isNotEmpty() && nickname.isNotEmpty()) {
-                    val bundle = Bundle()
-                    bundle.putString("k_name", name)
-                    arguments?.let {
-                        setFragmentResult("r_name", bundle)
-                    }
-                    dismiss()
-                }
+                val newItem = Item(
+                    R.drawable.tab_iv_mypage_fill,
+                    name,
+                    nickname,
+                    mobile,
+                    special,
+                    mail,
+                    eventText,
+                    "연락 가능 시간대 : 9시 ~ 23시"
+                )
+                NewListRepository.addAndSort(newItem)
+                dismiss()
+                // rv.notifyDataSetChanged()
             }
         }
 
@@ -133,7 +135,7 @@ class AddContactDialogFragment : DialogFragment() {
         }
 
         binding.addNoti10Btn.setOnClickListener {
-            val delayMinutes = 10
+            val delayMinutes = 1
             val title = "OREO"
             val message = "지금 연락하세요!"
             val uniqueNotificationId = generateUniqueNotificationId() // 고유한 알림 ID 생성
@@ -142,7 +144,7 @@ class AddContactDialogFragment : DialogFragment() {
         }
 
         binding.addNoti20Btn.setOnClickListener {
-            val delayMinutes = 20
+            val delayMinutes = 2
             val title = "OREO"
             val message = "지금 연락하세요!"
             val uniqueNotificationId = generateUniqueNotificationId() // 고유한 알림 ID 생성
@@ -152,13 +154,13 @@ class AddContactDialogFragment : DialogFragment() {
     }
     private fun useTextWatcher(editText: EditText): TextWatcher {
         return object : TextWatcher {
-            val maxLength = 15
+            val maxLength = 10
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if ((s?.length ?: 0) > maxLength) {
-                    binding.addNickName.error = "최대 $maxLength 글자 까지 입력 가능 합니다."
+                    binding.addEditName.error = "최대 $maxLength 글자 까지 입력 가능 합니다."
                 } else {
-                    binding.addNickName.error = null // 이전에 설정된 오류 지우기.
+                    binding.addEditName.error = null // 이전에 설정된 오류 지우기.
                 }
             }
 
