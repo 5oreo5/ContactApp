@@ -8,7 +8,7 @@ import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-class CallHelper(val con: Context, val rv : Adapter): ItemTouchHelper.Callback() {
+class CallHelper(private val con: Context, private val rv : Adapter): ItemTouchHelper.Callback() {
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder
     ): Int { return makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) }
 
@@ -16,15 +16,15 @@ class CallHelper(val con: Context, val rv : Adapter): ItemTouchHelper.Callback()
     ): Boolean { return false }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        val holder = viewHolder
-        val phoneNumber = if (holder is Adapter.ItemListHolder) {
-            holder.phone.text
-        } else { "" }
-        val callUriSwipedPerson = Uri.parse("tel:$phoneNumber")
-        val callIntent = Intent(Intent.ACTION_CALL, callUriSwipedPerson)
-        con.startActivity(callIntent)
-        // 전화 끊고 다시 돌아왔을 때
-        rv.notifyItemChanged(holder.absoluteAdapterPosition)
+
+        (viewHolder as? Adapter.ItemListHolder)?.apply {
+            val phoneNumber = phone.text
+            val callUriSwipedPerson = Uri.parse("tel:$phoneNumber")
+            val callIntent = Intent(Intent.ACTION_CALL, callUriSwipedPerson)
+            con.startActivity(callIntent)
+            // 전화 끊고 다시 돌아왔을 때
+            rv.notifyItemChanged(absoluteAdapterPosition)
+        }
 
     }
     override fun isItemViewSwipeEnabled(): Boolean { return true }
@@ -37,7 +37,7 @@ class CallHelper(val con: Context, val rv : Adapter): ItemTouchHelper.Callback()
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             val view = if (viewHolder is Adapter.ItemListHolder) {
                 viewHolder.mainRv
-            } else { "" }
+            } else return
 
             view?.let {
                 getDefaultUIUtil().onDraw(c, recyclerView,
@@ -51,13 +51,13 @@ class CallHelper(val con: Context, val rv : Adapter): ItemTouchHelper.Callback()
     ) {
         val view = if (viewHolder is Adapter.ItemListHolder) {
             viewHolder.mainRv
-        } else { "" }
-        view?.let {
+        } else return
+        view.let {
             getDefaultUIUtil().clearView(it as View?)
         }
     }
 }
 interface ItemTouchHelperListener {
-    fun onItemMove(from_position: Int, to_position: Int): Boolean
+    fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
     fun onItemSwipe(position: Int)
 }
