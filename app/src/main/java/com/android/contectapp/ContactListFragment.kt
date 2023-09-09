@@ -1,5 +1,6 @@
 package com.android.contectapp
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -31,7 +32,6 @@ import android.content.ContentResolver
 
 class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
 
-
     private lateinit var binding: FragmentContactListBinding
     private lateinit var rv: RecyclerView
     private lateinit var adapter: Adapter
@@ -43,8 +43,6 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         super.onCreate(savedInstanceState)
 
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,15 +50,12 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         binding = FragmentContactListBinding.inflate(layoutInflater)
         items.sortBy { it.name }
         return binding.root
-
-
     }
-
+    @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
         adapter.notifyDataSetChanged()
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
