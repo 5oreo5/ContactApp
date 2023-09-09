@@ -47,13 +47,10 @@ class DetailContactFragment : DialogFragment() {
         val contentResolver: ContentResolver = requireContext().contentResolver
         val contacts = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            null, // 여기에 선택적으로 조건을 추가할 수 있음
-            null, // 여기에 선택적으로 조건을 추가할 수 있음
-            null  // 여기에 선택적으로 정렬 순서를 지정할 수 있음
+            null,
+            null,
+            null
         )
-
-
-
     }
 
     override fun onCreateView(
