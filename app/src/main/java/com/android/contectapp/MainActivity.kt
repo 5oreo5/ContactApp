@@ -23,6 +23,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+    // 오작교 역할
+    var listener: ContactChangedListener? = null
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater)}
     lateinit var tabLayout: TabLayout
     private val mainAdapter = MainAdapter(this)
@@ -132,4 +134,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
+}
+interface ContactChangedListener {
+    fun onContactInserted()
 }

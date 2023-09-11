@@ -120,6 +120,8 @@ class AddContactDialogFragment() : DialogFragment() {
                 )
                 NewListRepository.addAndSort(newItem)
                 dismiss()
+
+                (activity as? MainActivity)?.listener?.onContactInserted()
                 // rv.notifyDataSetChanged()
             }
         }
