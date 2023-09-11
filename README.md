@@ -15,7 +15,8 @@
 #### [FEAT] :⚙️[Item],[AddContactFragMent]수정
 AddContactFragMent ->data리스트 데이터전달 함수 구현및 정렬하였습니다.
 #### [FEAT] :⚙️[MainActivty]수정 연락처 데이터 전달기능 구현 및 버그 수정
-->민지님과 연락처에서 받은 정보들을 datalist에 추가하였습니다.
+->연락처 데이터들을 앱에 연동하였습니다.
+->민지님과 연락처에서 받은 정보들을 datalist에 추가하는식으로 데이터를 가져와 버그 수정.
 
 ##
 ### Jihyeon
