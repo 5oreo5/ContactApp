@@ -75,16 +75,16 @@ AddContactFragMent ->data리스트 데이터전달 함수 구현및 정렬하였
 ##
 ### jaewon
 
-#### **[FEAT] : ⚙️ 09/04일 conflict 해결 : tablayout하고 viewpager2에 DetailContactFragment, ContactListFragment, MyPageFragment 연결**
+#### [FEAT] : ⚙️ 09/04일 conflict 해결 : tablayout하고 viewpager2에 DetailContactFragment, ContactListFragment, MyPageFragment 연결
 
-#### **[FEAT] : ⚙️ 09/04일 implementation_viewpager2 추가**
+#### [FEAT] : ⚙️ 09/04일 implementation_viewpager2 추가
 
-#### **[FEAT] : ⚙️ 09/05일 mainActivity viewPager로 각 페이지 연결 성공: tablayout 아이콘,텍스트 색 변경, 페이지 스와이프**
+#### [FEAT] : ⚙️ 09/05일 mainActivity viewPager로 각 페이지 연결 성공: tablayout 아이콘,텍스트 색 변경, 페이지 스와이프
 
-#### **[FEAT] : ⚙️ 09/05일 contactlist_add_btn 추가 addcontact 버튼 추가**
+#### [FEAT] : ⚙️ 09/05일 contactlist_add_btn 추가 addcontact 버튼 추가
 
-#### **[FEAT] : ⚙️ 09/05일 mainActivity 실제 폰에 있는 연락처 불러오기(적용 실패)**
+#### [FEAT] : ⚙️ 09/05일 mainActivity 실제 폰에 있는 연락처 불러오기(적용 실패)
 
-#### **[FEAT] : ⚙️ 09/07일 gird view : spinner 버튼의 type에 따라 뷰가 바뀌지 않음 , 바뀌는 뷰에 따라 아이템이 바뀌지 않음, 바뀌는 뷰에 맞는 holder가 생성되지 않음. 계속해서 List item과 grid item이 겹쳐져 보이게 됨.**
+#### [FEAT] : ⚙️ 09/07일 gird view : spinner 버튼의 type에 따라 뷰가 바뀌지 않음 , 바뀌는 뷰에 따라 아이템이 바뀌지 않음, 바뀌는 뷰에 맞는 holder가 생성되지 않음. 계속해서 List item과 grid item이 겹쳐져 보이게 됨.
 
-#### **[BUG_FIX] : 🐛 09/07일 ContactListFragment.kt 에서 onItemSelected의 item List의 holder를 재 생성 하지 못한 것을 수정하였다**.
+#### [BUG_FIX] : 🐛 09/07일 ContactListFragment.kt 에서 onItemSelected의 item List의 holder를 재 생성 하지 못한 것을 수정하였다.
