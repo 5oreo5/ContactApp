@@ -14,7 +14,7 @@ addcontact프래그먼트 ->data리스트 데이터전달 함수 구현및 정�
 ->민지님과 연락처에서 받은 정보들을 datalist에 추가하였습니다.
 
 
-###<Jihyeon>
+/Jihyeon/
   
 ### [FEAT] : ⚙️ addContactDial.xml 추가
 - 팀회의로 전체적인 와이어 프레임을 완성하고 레이아웃 완성.
