@@ -1,19 +1,19 @@
 # ContactApp
 <Jae Hoon>\n
-### [FEAT] : ⚙️리사이클 뷰 xml레이아웃[activity_recycleview_item_list] 추가\n
+#### [FEAT] : ⚙️리사이클 뷰 xml레이아웃[activity_recycleview_item_list] 추가\n
 ->기본적인 리사이클 뷰 틀 레이아웃 구성하였습니다.\n
-### [FEAT] : ⚙️ 리사이클 뷰 어댑터 추가 및 어댑터 연결\n
+#### [FEAT] : ⚙️ 리사이클 뷰 어댑터 추가 및 어댑터 연결\n
 ->리사이클 뷰 어댑터 틀{adapter}을 추가하였습니다.\n
  알림 기능 추가\n
-### [FEAT] :⚙️[notifiationHelper],[AlterReceiver],AddContactFragMent에 알림기능 예약 밑 적용
+#### [FEAT] :⚙️[notifiationHelper],[AlterReceiver],AddContactFragMent에 알림기능 예약 밑 적용
 \notification과 알람기능을 동시에 작성하였습니다.\n
 잔버그가 있었습니다.\n
-### [BUG_FIX] : 🐛 [notifiationHelper],[AlterReceiver],AddContactFragMent 내용 변경
+#### [BUG_FIX] : 🐛 [notifiationHelper],[AlterReceiver],AddContactFragMent 내용 변경
 알림기능 최종수정/Item 데이터전달 \n
 ->알람매니저를 이용하여 알람기능 오류수정 및 최종완성하였습니다.\n
-### [FEAT] :⚙️[Item],[AddContactFragMent]수정
+#### [FEAT] :⚙️[Item],[AddContactFragMent]수정
 AddContactFragMent ->data리스트 데이터전달 함수 구현및 정렬하였습니다.\n
-### [FEAT] :⚙️[MainActivty]수정 연락처 데이터 전달기능 구현 및 버그 수정\n
+#### [FEAT] :⚙️[MainActivty]수정 연락처 데이터 전달기능 구현 및 버그 수정\n
 ->민지님과 연락처에서 받은 정보들을 datalist에 추가하였습니다.\n
 
 ##
