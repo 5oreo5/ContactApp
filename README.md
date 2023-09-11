@@ -1,5 +1,6 @@
 # ContactApp
-<Jae Hoon>\n
+##
+### Jae Hoon
 #### [FEAT] : ⚙️리사이클 뷰 xml레이아웃[activity_recycleview_item_list] 추가\n
 ->기본적인 리사이클 뷰 틀 레이아웃 구성하였습니다.\n
 #### [FEAT] : ⚙️ 리사이클 뷰 어댑터 추가 및 어댑터 연결\n
