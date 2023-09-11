@@ -45,3 +45,30 @@ AddContactFragMent ->data리스트 데이터전달 함수 구현및 정렬하였
 #### [DESIGN] : :art: 앱 아이콘/런처 변경
 - manifest 파일에서 앱 아이콘과 런처 이미지를 변경함.
 
+##
+### Minji
+
+#### [DESIGN] : 🎨
+- DetailDialogFragment 레이아웃 구현
+- MyPageFragment 레이아웃 구현
+  
+#### [FEAT] : ⚙️
+**[Contact List Fragment]**
+- recyclerview & adapter 연결
+- 아이템 swipe 시 전화 걸기 화면으로 이동
+- dummy data 오름차순 정렬하여 반환
+
+**[Detail Fragment]**
+- Contact List Fragment에서 상세 data 받아 정보 표시(이름, 연락처, 담당 과, 알림, 상태 등)
+- Contact List Fragment에서 아이템 클릭 → 상세 화면 다이얼로그 팝업으로 구현
+- Detail Fragment 내 '전화 걸기' 버튼 클릭 → 전화 허용 권한 다이얼로그 → 사용자 허용 클릭 시 전화 걸기 화면으로 이동
+
+**[Add Contact Fragment]**
+- 연락처 추가 시 Contact List Fragment로 data 전달 및 view 즉각 반영
+
+**[MyPage Fragment]**
+- 내 정보 표시(이름, 별명, 연락처, 담당 과, bio, 상태 등)
+
+**[NewListRepository]**
+- dummy data 생성
+
