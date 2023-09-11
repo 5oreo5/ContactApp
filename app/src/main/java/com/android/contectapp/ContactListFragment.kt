@@ -28,9 +28,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.FragmentContactListBinding
 import android.content.ContentResolver
+import android.content.Context
 
 
-class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
+class ContactListFragment : Fragment(R.layout.fragment_contact_list),ContactChangedListener {
 
     private lateinit var binding: FragmentContactListBinding
     private lateinit var rv: RecyclerView
@@ -51,11 +52,12 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         items.sortBy { it.name }
         return binding.root
     }
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onResume() {
-        super.onResume()
-        adapter.notifyDataSetChanged()
-    }
+    // data 변경될 때만 불리게끔
+//    @SuppressLint("NotifyDataSetChanged")
+//    override fun onResume() {
+//        super.onResume()
+//        adapter.notifyDataSetChanged()
+//    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -118,14 +120,18 @@ class ContactListFragment : Fragment(R.layout.fragment_contact_list) {
         // RecyclerView에 ItemTouchHelper 연결
         helper.attachToRecyclerView(rv)
     }
+    override fun onContactInserted() {
+        adapter.notifyDataSetChanged()
+    }
 
-
-
-
-
-
-
-
-
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            context.listener = this
+        }
+    }
+    override fun onDetach() {
+        super.onDetach()
+        (activity as? MainActivity)?.listener = null
+    }
 }
