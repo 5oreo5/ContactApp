@@ -73,7 +73,7 @@ AddContactFragMent ->data리스트 데이터전달 함수 구현및 정렬하였
 - dummy data 생성
 
 ##
-### jaewon
+### Jaewon
 
 #### [FEAT] : ⚙️ 09/04일 conflict 해결 : tablayout하고 viewpager2에 DetailContactFragment, ContactListFragment, MyPageFragment 연결
 
