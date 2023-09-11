@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_rv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    tools:context=".Recyclerview_item_list">
+
+    <ImageView
+        android:id="@+id/recyclerview_iv_profile"
+        android:layout_width="70dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/circleshape"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/detail_iv_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/recyclerview_speciallist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:text="abdeef University"
+        android:textColor="#C9C0C0"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_name" />
+
+    <TextView
+        android:id="@+id/recyclerview_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="WooJaeHoon"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintTop_toTopOf="@+id/recyclerview_iv_profile" />
+
+    <TextView
+        android:id="@+id/recyclerview_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="010-1111-1111"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/recyclerview_iv_profile"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_speciallist" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerview_iv_profile" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
