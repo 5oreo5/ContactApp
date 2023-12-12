@@ -1,4 +1,4 @@
-package com.android.contectapp
+package com.android.contectapp.ui
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,13 +8,13 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.Settings
 import android.util.Log
-import android.view.ContextMenu
-import android.view.View
-import android.widget.AdapterView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
+import com.android.contectapp.util.Item
+import com.android.contectapp.adapter.MainAdapter
+import com.android.contectapp.util.NewListRepository
+import com.android.contectapp.R
 import com.android.contectapp.databinding.ActivityMainBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var tabLayout: TabLayout
     private val mainAdapter = MainAdapter(this)
     private val tabTextList = listOf("contacts", "my_page")
-    private val tabIconList = listOf(R.drawable.tab_iv_contacts,R.drawable.tab_iv_mypage)
+    private val tabIconList = listOf(R.drawable.tab_iv_contacts, R.drawable.tab_iv_mypage)
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {

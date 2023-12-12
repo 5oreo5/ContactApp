@@ -1,4 +1,4 @@
-package com.android.contectapp
+package com.android.contectapp.alarm
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.net.Uri
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.android.contectapp.adapter.Adapter
 
 class CallHelper(private val con: Context, private val rv : Adapter): ItemTouchHelper.Callback() {
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder

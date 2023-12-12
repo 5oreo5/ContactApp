@@ -1,4 +1,4 @@
-package com.android.contectapp
+package com.android.contectapp.ui
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -16,9 +16,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResult
+import com.android.contectapp.alarm.AlertReceiver
+import com.android.contectapp.util.Item
+import com.android.contectapp.util.NewListRepository
+import com.android.contectapp.alarm.NotificationHelper
+import com.android.contectapp.R
 import com.android.contectapp.databinding.FragmentAddContactDialogBinding
 import java.util.regex.Pattern
 

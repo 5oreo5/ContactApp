@@ -1,4 +1,4 @@
-package com.android.contectapp
+package com.android.contectapp.ui
 
 import android.content.ContentResolver
 import android.content.Context
@@ -8,8 +8,6 @@ import android.graphics.Point
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.provider.ContactsContract.CommonDataKinds
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -1,37 +1,28 @@
-package com.android.contectapp
+package com.android.contectapp.ui
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.OnReceiveContentListener
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.contectapp.databinding.FragmentContactListBinding
-import android.content.ContentResolver
 import android.content.Context
+import com.android.contectapp.adapter.Adapter
+import com.android.contectapp.alarm.CallHelper
+import com.android.contectapp.util.Item
+import com.android.contectapp.util.NewListRepository
+import com.android.contectapp.R
 
 
-class ContactListFragment : Fragment(R.layout.fragment_contact_list),ContactChangedListener {
+class ContactListFragment : Fragment(R.layout.fragment_contact_list), ContactChangedListener {
 
     private lateinit var binding: FragmentContactListBinding
     private lateinit var rv: RecyclerView

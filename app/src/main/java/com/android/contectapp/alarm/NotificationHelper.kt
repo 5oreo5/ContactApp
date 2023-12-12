@@ -1,4 +1,4 @@
-package com.android.contectapp
+package com.android.contectapp.alarm
 
 import android.app.AlarmManager
 import android.app.Notification
@@ -11,6 +11,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.android.contectapp.R
 import java.util.Calendar
 
 class NotificationHelper(base: Context?) : ContextWrapper(base) {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="20dp"
-    tools:context=".Recyclerview_item_list">
+    tools:context=".util.RV">
 
     <ImageView
         android:id="@+id/recyclerview_iv_profile"

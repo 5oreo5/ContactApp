@@ -1,7 +1,7 @@
-package com.android.contectapp
+package com.android.contectapp.util
 
 import android.os.Parcelable
-import android.util.Log
+import com.android.contectapp.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

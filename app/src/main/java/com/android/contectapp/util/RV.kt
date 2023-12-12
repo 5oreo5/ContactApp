@@ -1,11 +1,12 @@
-package com.android.contectapp
+package com.android.contectapp.util
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
+import com.android.contectapp.R
 
-class Recyclerview_item_list : AppCompatActivity() {
+class RV : AppCompatActivity() {
     val datalist= mutableListOf<Item>()
     lateinit var activityResultLauncher : ActivityResultLauncher<Intent>
     var log="로그"

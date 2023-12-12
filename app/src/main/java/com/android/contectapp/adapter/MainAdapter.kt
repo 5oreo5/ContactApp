@@ -1,9 +1,10 @@
-package com.android.contectapp
+package com.android.contectapp.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayout
+import com.android.contectapp.ui.ContactListFragment
+import com.android.contectapp.ui.MyPageFragment
 import java.lang.IllegalArgumentException
 
 class MainAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
